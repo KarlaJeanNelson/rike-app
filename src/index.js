@@ -33,7 +33,7 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+		<App />
   </Provider>,
   document.getElementById('react-root'),
 );

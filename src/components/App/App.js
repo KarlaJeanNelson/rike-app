@@ -1,65 +1,73 @@
 import React, {Component} from 'react';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from 'react-router-dom';
-
 import {connect} from 'react-redux';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from './theme';
+import 'typeface-roboto';
+import 'typeface-karla';
+import 'typeface-biorhyme';
+import './App.css';
 
-import Nav from '../Nav/Nav';
+import TopNav from '../UI/TopNav';
 import Footer from '../Footer/Footer';
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
-
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-
-import './App.css';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Home from '../../screens/Public/Home/Home';
+import About from '../../screens/Public/About/About';
+import Contact from '../../screens/Public/Contact/Contact';
+import UserHome from '../../screens/User/Home';
 
 class App extends Component {
   componentDidMount () {
-    this.props.dispatch({type: 'FETCH_USER'})
+    this.props.dispatch({type: 'FETCH_USER'});
   }
 
   render() {
     return (
       <Router>
-        <div>
-          <Nav />
+				<MuiThemeProvider theme={theme}>
+					<CssBaseline />
+					<TopNav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
-            {/* Visiting localhost:3000/about will show the about page.
+            {/* <Redirect exact from="/" to="/home" /> */}
+            {/* Visiting localhost:3000/home will show the home page.
             This is a route anyone can see, no login necessary */}
             <Route
               exact
-              path="/about"
-              component={AboutPage}
+              path="/"
+              component={Home}
             />
+            <Route
+              exact
+              path="/about"
+              component={About}
+            />
+						<Route
+							exact
+							path="/contact"
+							component={Contact}
+						/>
             {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/home will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
+            Visiting localhost:3000/home will show the UserHome if the user is logged in.
+            If the user is not logged in, the ProtectedRoute will show the homepage.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
             <ProtectedRoute
               exact
               path="/home"
-              component={UserPage}
-            />
-            {/* This works the same as the other protected route, except that if the user is logged in,
-            they will see the info page instead. */}
-            <ProtectedRoute
-              exact
-              path="/info"
-              component={InfoPage}
+              component={UserHome}
             />
             {/* If none of the other routes matched, we will show a 404. */}
-            <Route render={() => <h1>404</h1>} />
+            <Route render={() => <Redirect to="/" />} />
           </Switch>
           <Footer />
-        </div>
+				</MuiThemeProvider>
       </Router>
   )}
 }
