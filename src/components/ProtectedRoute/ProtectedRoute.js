@@ -1,8 +1,8 @@
 import React from 'react';
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+import LoginPage from '../../screens/Auth/Login/Login';
+import RegisterPage from '../../screens/Auth/Register/Register';
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -21,11 +21,12 @@ const ProtectedRoute = (props) => {
     // Alias prop 'component' as 'ComponentToProtect'
     component: ComponentToProtect,
     user,
-    loginMode,
+		loginMode,
+		loginMessage,
     ...otherProps
   } = props;
 
-  let ComponentToShow;
+	let ComponentToShow;
 
   if(user.id) {
     // if the user is logged in (only logged in users have ids)

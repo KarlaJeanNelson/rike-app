@@ -23,7 +23,7 @@ class LoginPage extends Component {
     }
   } // end login
 
-  handleInputChangeFor = propertyName => (event) => {
+  handleChange = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
@@ -32,12 +32,12 @@ class LoginPage extends Component {
   render() {
     return (
       <div>
-        {this.props.errors.loginMessage && (
+        {this.props.login.loginMessage && (
           <h2
             className="alert"
             role="alert"
           >
-            {this.props.errors.loginMessage}
+            {this.props.login.loginMessage}
           </h2>
         )}
         <form onSubmit={this.login}>
@@ -49,7 +49,7 @@ class LoginPage extends Component {
                 type="text"
                 name="username"
                 value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
+                onChange={this.handleChange('username')}
               />
             </label>
           </div>
@@ -60,7 +60,7 @@ class LoginPage extends Component {
                 type="password"
                 name="password"
                 value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
+                onChange={this.handleChange('password')}
               />
             </label>
           </div>
@@ -91,7 +91,7 @@ class LoginPage extends Component {
 // if you wanted you could write this code like this:
 // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
-  errors: state.errors,
+  login: state.loginMode,
 });
 
 export default connect(mapStateToProps)(LoginPage);
