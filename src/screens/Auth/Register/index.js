@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
@@ -30,18 +31,16 @@ const styles = theme => ({
 		marginLeft: 8,
 		minWidth: 100,		
 	}
-});
+})
 
-const otherMode = (mode) => (mode === 'LOGIN' ? 'REGISTER' : 'LOGIN')
-
-class LoginPage extends Component {
+class RegisterPage extends Component {
   state = {
     username: '',
     password: '',
   };
 
   login = (event) => {
-		event.preventDefault();
+    event.preventDefault();
     if (this.state.username && this.state.password) {
       this.props.dispatch({
         type: 'LOGIN',
@@ -59,17 +58,18 @@ class LoginPage extends Component {
     this.setState({
       [propertyName]: event.target.value,
     });
-	}
+  }
 
   render() {
 		const { classes, mode, message } = this.props;
+		console.log(this.props);
     return (
 			<Grid container spacing={16} className={classes.root}>
 				<Grid item sm={1} md={2} lg={3}></Grid>
 				<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
 					<Paper className={classes.paper}>
-						<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
-						<form onSubmit={this.login}>
+						<Typography variant="h4" className={classes.spacing}>{mode.toUpperCase()}</Typography>
+						<form onSubmit={this.register}>
 							<TextField
 								id="username"
 								name="username"
@@ -96,13 +96,13 @@ class LoginPage extends Component {
 									variant="contained"
 									className={classNames(classes.button)}
 								>
-									{mode}
+									REGISTER
 								</Button>
 								<Button
 									onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
 									className={classes.button}
 								>
-									{otherMode(mode)}
+									register
 								</Button>
 							</Typography>
 						</form>
@@ -114,7 +114,7 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
+RegisterPage.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
@@ -123,10 +123,10 @@ LoginPage.propTypes = {
 // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
 	mode: state.loginMode,
-	message: state.messages.loginMessage,
+	message: state.messages.registrationMessage,
 });
 
 export default compose(
 	connect(mapStateToProps),
 	withStyles(styles)
-)(LoginPage);
+)(RegisterPage);

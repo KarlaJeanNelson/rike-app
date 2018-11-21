@@ -11,6 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
+import Login from './Login';
+import Register from './Register';
+
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
@@ -36,12 +40,12 @@ const otherMode = (mode) => (mode === 'LOGIN' ? 'REGISTER' : 'LOGIN')
 
 class LoginPage extends Component {
   state = {
-    username: '',
-    password: '',
+		username: '',
+		password: '',
   };
 
-  login = (event) => {
-		event.preventDefault();
+  login = () => {
+		// event.preventDefault();
     if (this.state.username && this.state.password) {
       this.props.dispatch({
         type: 'LOGIN',
@@ -53,12 +57,32 @@ class LoginPage extends Component {
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
-  } // end login
+	} // end login
+	
+	registerUser = () => {
+    // event.preventDefault();
+    if (this.state.username && this.state.password) {
+      this.props.dispatch({
+        type: 'REGISTER',
+        payload: {
+          username: this.state.username,
+          password: this.state.password,
+        },
+      });
+    } else {
+      this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+    }
+  } // end registerUser
 
   handleChange = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
+	}
+
+	handleSubmit = (mode) => (event) => {
+		event.preventDefault();
+		// mode === 'LOGIN' ? this.login() : this.registerUser();
 	}
 
   render() {
@@ -69,43 +93,23 @@ class LoginPage extends Component {
 				<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
 					<Paper className={classes.paper}>
 						<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
-						<form onSubmit={this.login}>
-							<TextField
-								id="username"
-								name="username"
-								type="text"
-								label="Username"
-								fullWidth
-								margin="normal"
-								value={this.state.username}
-								onChange={this.handleChange('username')}
-							/>
-							<TextField
-								id="password"
-								name="password"
-								type="password"
-								label="Password"
-								fullWidth
-								margin="normal"
-								value={this.state.password}
-								onChange={this.handleChange('password')}
-							/>
-							<Typography align="right" className={classes.spacing}>
-								<Button 
-									type="submit"
-									variant="contained"
-									className={classNames(classes.button)}
-								>
-									{mode}
-								</Button>
-								<Button
-									onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
-									className={classes.button}
-								>
-									{otherMode(mode)}
-								</Button>
-							</Typography>
-						</form>
+						<Login handleChange={() => this.handleChange()}/>
+						{/* <Register handleChange={this.handleChange}/> */}
+						<Typography align="right" className={classes.spacing}>
+							<Button 
+								variant="contained"
+								onClick={() => {this.handleSubmit(mode)}}
+								className={classNames(classes.button)}
+							>
+								{mode}
+							</Button>
+							<Button
+								onClick={() => {this.props.dispatch({type: `SET_TO_${otherMode(mode)}_MODE`})}}
+								className={classes.button}
+							>
+								{otherMode(mode)}
+							</Button>
+						</Typography>
 					</Paper>
 				</Grid>
 				<Grid item sm={1} md={2} lg={3}></Grid>

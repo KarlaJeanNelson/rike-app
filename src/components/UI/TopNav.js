@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'recompose';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,10 +25,8 @@ const styles = theme => ({
 	},
 	logo: {
 		fontFamily: `'BioRhyme', sans-serif`,
+		textDecoration: 'none',
 	},
-	links: {
-
-	}
 })
 
 const TopNav = props => {
@@ -36,8 +35,13 @@ const TopNav = props => {
     <header className={classes.root}>
       <AppBar position="sticky" className={classes.bg}>
         <Toolbar>
-          <Typography color="inherit" variant="h4" className={classNames(classes.grow, classes.logo)}>
-						LOGO
+          <Typography
+						color="inherit"
+						variant="h4"
+						className={classNames(classes.grow, classes.logo)}
+						component={Link} to="/"
+					>
+							LOGO
           </Typography>
 					<Button component={Link} to="/" color="inherit">Home</Button>
 					<Button component={Link} to="/about" color="inherit">About</Button>
@@ -59,4 +63,7 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(TopNav));
+export default compose(
+	connect(mapStateToProps),
+	withStyles(styles)
+)(TopNav);
