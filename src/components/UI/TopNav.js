@@ -11,7 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import RestaurantIcon from '@material-ui/icons/Restaurant';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PersonIcon from '@material-ui/icons/Person';
 
 const styles = theme => ({
 	root: {
@@ -47,7 +48,7 @@ const TopNav = props => {
 					<Button component={Link} to="/about" color="inherit">About</Button>
 					<Button component={Link} to="/contact" color="inherit">Contact</Button>
 					<IconButton component={Link} to="/home" color="inherit">
-						<AccountCircleIcon />
+						<PersonIcon />
 					</IconButton>
         </Toolbar>
       </AppBar>

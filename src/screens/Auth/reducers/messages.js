@@ -7,7 +7,7 @@ const loginMessage = (state = '', action) => {
     case 'CLEAR_LOGIN_ERROR':
       return '';
     case 'LOGIN_INPUT_ERROR':
-      return 'Enter your username and password!';
+      return 'Please enter username and password.';
     case 'LOGIN_FAILED':
       return `Oops! The username and password didn't match. Try again!`;
     case 'LOGIN_FAILED_NO_CODE':
@@ -24,9 +24,9 @@ const registrationMessage = (state = '', action) => {
     case 'CLEAR_REGISTRATION_ERROR':
       return '';
     case 'REGISTRATION_INPUT_ERROR':
-      return 'Choose a username and password!';
+      return 'Please fill out all required fields.';
     case 'REGISTRATION_FAILED':
-      return 'Oops! That didn\'t work. The username might already be taken. Try again!';
+      return `Oops! That didn't work. The username might already be taken. Please try again.`;
     default:
       return state;
   }
