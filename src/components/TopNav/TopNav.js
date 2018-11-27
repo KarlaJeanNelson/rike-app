@@ -11,8 +11,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import LogOutButton from './LogOutButton';
-import LogInButton from './LogInButton';
+import MenuButton from '../UI/MenuButton';
+import LogInButton from '../UI/LogInButton';
+import UserNavButtons from './UserNavButtons';
 
 const styles = theme => ({
 	root: {
@@ -21,8 +22,9 @@ const styles = theme => ({
 	grow: {
 		flexGrow: 1
 	},
-	bg: {
+	appBar: {
 		backgroundColor: 'black',
+		zIndex: theme.zIndex.drawer + 1,
 	},
 	logo: {
 		fontFamily: `'BioRhyme', sans-serif`,
@@ -34,8 +36,9 @@ const TopNav = props => {
 	const { classes, user } = props;
 	return (
     <header className={classes.root}>
-      <AppBar position="sticky" className={classes.bg}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+					<MenuButton />
           <Typography
 						color="inherit"
 						variant="h4"
@@ -47,7 +50,8 @@ const TopNav = props => {
 					<Button component={Link} to="/" color="inherit">Home</Button>
 					<Button component={Link} to="/about" color="inherit">About</Button>
 					<Button component={Link} to="/contact" color="inherit">Contact</Button>
-					{user.id ? <LogOutButton /> : <LogInButton />}
+					
+					{user.id ? <UserNavButtons /> : <LogInButton />}
         </Toolbar>
       </AppBar>
     </header>
@@ -59,7 +63,7 @@ TopNav.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.auth.user,
 });
 
 export default compose(

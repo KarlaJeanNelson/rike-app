@@ -9,13 +9,6 @@ import rootReducer from './redux/reducers'; // imports ./redux/reducers/index.js
 import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
 
 import App from './components/App/App';
-// import theme from './components/App/theme';
-// import { MuiThemeProvider } from '@material-ui/core';
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faUser, faUserSlash, faStroopwafel } from '@fortawesome/free-solid-svg-icons'
-
-// library.add(faUser, faUserSlash, faStroopwafel)
 
 const sagaMiddleware = createSagaMiddleware();
 

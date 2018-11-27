@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux';
-import loginMode from '../../screens/Auth/reducers/mode';
-import messages from '../../screens/Auth/reducers/messages';
-import user from '../../screens/User/reducer';
+import auth from '../../screens/Auth/reducers/index';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -10,9 +8,7 @@ import user from '../../screens/User/reducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
-	loginMode, // login or registration mode
-	messages, // contains registrationMessage and loginMessage
-  user, // will have an id and username if someone is logged in
+	auth // loginMode, errorMessage, and user
 });
 
 export default rootReducer;

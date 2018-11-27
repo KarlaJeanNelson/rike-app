@@ -1,8 +1,5 @@
 import { all } from 'redux-saga/effects';
-import loginSaga from '../../screens/Auth/Login/saga';
-import registrationSaga from '../../screens/Auth/Register/saga';
-import toggleModeSaga from '../../screens/Auth/saga';
-import userSaga from '../../screens/User/saga';
+import authSaga from '../../screens/Auth/sagas/index'
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -13,9 +10,6 @@ import userSaga from '../../screens/User/saga';
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
-    loginSaga(),
-		registrationSaga(),
-		toggleModeSaga(),
-    userSaga(),
+    authSaga(),
   ]);
 }

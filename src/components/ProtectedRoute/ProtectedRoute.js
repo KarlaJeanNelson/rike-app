@@ -22,7 +22,7 @@ const ProtectedRoute = (props) => {
     // Alias prop 'component' as 'ComponentToProtect'
     component: ComponentToProtect,
     user,
-		mode,
+		loginMode,
     ...otherProps
   } = props;
 
@@ -45,7 +45,7 @@ const ProtectedRoute = (props) => {
 	if (user.id) {
 		ComponentToShow = ComponentToProtect;
 	} else {
-		ComponentToShow = AuthPage
+		ComponentToShow = AuthPage;
 	}
 
   // We return a Route component that gets added to our list of routes
@@ -65,8 +65,8 @@ const ProtectedRoute = (props) => {
 // const mapStateToProps = ({ user, loginMode }) => ({ user, loginMode });
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    mode: state.loginMode,
+    user: state.auth.user,
+    loginMode: state.auth.loginMode,
   }
 }
 
