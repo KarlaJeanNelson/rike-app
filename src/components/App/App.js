@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import {connect} from 'react-redux';
+
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
@@ -13,13 +14,19 @@ import 'typeface-karla';
 import 'typeface-biorhyme';
 import theme from './theme';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faUserSlash, faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+
 import TopNav from '../UI/TopNav';
-// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-// import Home from '../../screens/Public/Home/Home';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Home from '../../screens/Public/Home/Home';
 import About from '../../screens/Public/About/About';
 import Contact from '../../screens/Public/Contact/Contact';
-// import UserHome from '../../screens/User/Home';
+import UserHome from '../../screens/User/Home';
 import DonorHome from '../../screens/Donor/Home';
+
+library.add(faUser, faUserSlash, faStroopwafel)
 
 class App extends Component {
   componentDidMount () {
@@ -56,11 +63,11 @@ class App extends Component {
 						Visiting localhost:3000/home will show the UserHome if the user is logged in.
 						If the user is not logged in, the ProtectedRoute will show the homepage.
 						Even though it seems like they are different pages, the user is always on localhost:3000/home */}
-						{/* <ProtectedRoute
+						<ProtectedRoute
 							exact
 							path="/home"
 							component={UserHome}
-						/> */}
+						/>
 						{/* If none of the other routes matched, we will show a 404. */}
 						<Route render={() => <Redirect to="/" />} />
 					</Switch>

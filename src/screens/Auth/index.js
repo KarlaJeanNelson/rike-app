@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import AlertDialog from '../../components/UI/AlertDialog';
 import Login from './Login';
 import Register from './Register';
 
@@ -42,11 +41,13 @@ class AuthPage extends Component {
   state = {
 		username: '',
 		password: '',
+		password2: '',
+		open: false,
   };
 
   login = () => {
 		// event.preventDefault();
-		console.log(`in login`);
+		console.log(`in login`, this.state);
     if (this.state.username && this.state.password) {
       this.props.dispatch({
         type: 'LOGIN',
@@ -56,22 +57,27 @@ class AuthPage extends Component {
         },
       });
     } else {
-      this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
+      this.props.dispatch({ type: 'AUTH_INPUT_ERROR' });
     }
 	} // end login
 	
 	registerUser = () => {
-    // event.preventDefault();
-    if (this.state.username && this.state.password) {
+		// event.preventDefault();
+		if (this.state.password.length < 8) {
+			this.props.dispatch({
+				type: 'PASSWORD_TOO_SHORT'
+			})
+		} else if (this.state.password !== this.state.password2) {
+			this.props.dispatch({
+				type: 'PASSWORD_MISMATCH'
+			});
+		} else if (this.state.username && this.state.password) {
       this.props.dispatch({
         type: 'REGISTER',
-        payload: {
-          username: this.state.username,
-          password: this.state.password,
-        },
+        payload: this.state,
       });
     } else {
-      this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+      this.props.dispatch({type: 'AUTH_INPUT_ERROR'});
     }
   } // end registerUser
 
@@ -83,7 +89,7 @@ class AuthPage extends Component {
 
 	handleSubmit = (mode) => (event) => {
 		event.preventDefault();
-		// console.log(`in handleSubmit`);
+		console.log(`in handleSubmit`);
 		return mode === 'LOGIN' ? this.login() : this.registerUser();
 	}
 
@@ -91,39 +97,49 @@ class AuthPage extends Component {
 		this.setState({
 			username: '',
 			password: '',
-		})
+			password2: '',
+		});
+	}
+
+	switchMode = (mode) => {
+		this.props.dispatch({
+			type: 'TOGGLE_MODE',
+			payload: `SET_TO_${otherMode(mode)}_MODE`
+		});
 	}
 
   render() {
-		const { classes, mode, message } = this.props;
+		const { classes, message, mode } = this.props;
     return (
-			<Grid container spacing={16} className={classes.root}>
-				<Grid item sm={1} md={2} lg={3}></Grid>
-				<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
-					<Paper className={classes.paper}>
-						<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
-						{ mode === 'LOGIN' ? <Login handleChange={() => this.handleChange()}/>: <Register handleChange={this.handleChange}/> }
-						<form onSubmit={this.handleSubmit(mode)}>
-						<Typography align="right" className={classes.spacing}>
-							<Button
-								type="submit"
-								variant="contained"
-								className={classNames(classes.button)}
-							>
-								{mode}
-							</Button>
-							<Button
-								onClick={() => {this.props.dispatch({type: `SET_TO_${otherMode(mode)}_MODE`})}}
-								className={classes.button}
-							>
-								{otherMode(mode)}
-							</Button>
-						</Typography>
-						</form>
-					</Paper>
+			<div className={classes.root}>			
+				<Grid container spacing={16} className={classes.grow}>
+					<Grid item sm={1} md={2} lg={3}></Grid>
+					<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
+						<Paper className={classes.paper}>
+							<form onSubmit={this.handleSubmit(mode)}>
+								<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
+								{ mode === 'LOGIN' ? <Login handleChange={this.handleChange}/> : <Register handleChange={this.handleChange} /> }
+								<Typography align="right" className={classes.spacing}>
+									<Button
+										type="submit"
+										variant="contained"
+										className={classNames(classes.button)}
+									>
+										{mode}
+									</Button>
+									<Button
+										onClick={() => this.switchMode(mode)}
+										className={classes.button}
+									>
+										{otherMode(mode)}
+									</Button>
+								</Typography>
+							</form>
+						</Paper>
+					</Grid>
+					<Grid item sm={1} md={2} lg={3}></Grid>
 				</Grid>
-				<Grid item sm={1} md={2} lg={3}></Grid>
-			</Grid>
+			</div>
     );
   }
 }
@@ -132,12 +148,11 @@ AuthPage.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
+// Name what we want from state so that we can use shorthand to get these values.
 const mapStateToProps = state => ({
+	message: state.message,
 	mode: state.loginMode,
-	message: state.messages.loginMessage,
+	user: state.user,
 });
 
 export default compose(

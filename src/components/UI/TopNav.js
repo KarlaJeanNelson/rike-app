@@ -7,12 +7,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-// import RestaurantIcon from '@material-ui/icons/Restaurant';
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import PersonIcon from '@material-ui/icons/Person';
+
+import LogOutButton from './LogOutButton';
+import LogInButton from './LogInButton';
 
 const styles = theme => ({
 	root: {
@@ -31,7 +31,7 @@ const styles = theme => ({
 })
 
 const TopNav = props => {
-	const { classes } = props;
+	const { classes, user } = props;
 	return (
     <header className={classes.root}>
       <AppBar position="sticky" className={classes.bg}>
@@ -47,9 +47,7 @@ const TopNav = props => {
 					<Button component={Link} to="/" color="inherit">Home</Button>
 					<Button component={Link} to="/about" color="inherit">About</Button>
 					<Button component={Link} to="/contact" color="inherit">Contact</Button>
-					<IconButton component={Link} to="/home" color="inherit">
-						<PersonIcon />
-					</IconButton>
+					{user.id ? <LogOutButton /> : <LogInButton />}
         </Toolbar>
       </AppBar>
     </header>
