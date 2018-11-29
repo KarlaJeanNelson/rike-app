@@ -4,6 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import MomentUtils from '@date-io/moment';
 
 import rootReducer from './redux/reducers'; // imports ./redux/reducers/index.js
 import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
@@ -33,9 +35,9 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-		{/* <MuiThemeProvider theme={theme}> */}
+		<MuiPickersUtilsProvider utils={MomentUtils}>
 			<App />
-		{/* </MuiThemeProvider> */}
+		</MuiPickersUtilsProvider>
   </Provider>,
   document.getElementById('react-root'),
 );

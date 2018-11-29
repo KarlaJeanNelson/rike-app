@@ -39,8 +39,17 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 });
 
-class PickupInfo extends Component {
-	state = {}
+const units = [
+	{ id: 10, abbr: 'Kg' },
+	{ id: 9, abbr: 'g' },
+	{ id: 3, abbr: 'lb' },
+]
+
+class BasicData extends Component {
+	state = {
+		qtyUnit: 3,
+		expDate: new Date(),
+	}
 
   handleChange = propName => event => {
     this.setState({
@@ -71,7 +80,24 @@ class PickupInfo extends Component {
 					<form onSubmit={this.handleSubmit}>
 						<Grid container spacing={16}>
 							<Grid item xs={12} className={classes.item}>
-								<Typography variant="h4" className={classes.spacing}>PICKUP INFO</Typography>
+								<Typography variant="h4">New Donation</Typography>
+							</Grid>
+							<Grid item xs={12} className={classes.item}>
+								<Typography variant="h5">General Information</Typography>
+							</Grid>
+							<Grid item xs={12} sm={8} className={classes.item}>
+								<TextField
+									id="newFoodName"
+									name="foodName"
+									label="Food name"
+									InputLabelProps={{
+										shrink: true,
+									}}
+									type="text"
+									fullWidth
+									autoFocus
+									onChange={this.handleChange('food_name')}
+								/>
 							</Grid>
 							<Grid item xs={12} sm={4} className={classes.item}>
 								<DatePicker
@@ -103,6 +129,19 @@ class PickupInfo extends Component {
 									onChange={this.handleChange('qty')}
 									className={classes.grow}
 								/>
+								<TextField
+									id="newQtyUnit"
+									select
+									name="qtyUnit"
+									value={this.state.qtyUnit}
+									onChange={this.handleChange('qtyUnit')}
+								>
+									{units.map(option => (
+										<MenuItem key={option.id} value={option.id}>
+											{option.abbr}
+										</MenuItem>
+									))}
+								</TextField>
 							</Grid>
 							<Grid item xs={12} sm={8} className={classes.item}>
 								<TextField
@@ -176,7 +215,7 @@ class PickupInfo extends Component {
 	}
 }
 
-PickupInfo.propTypes = {
+BasicData.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
@@ -187,4 +226,4 @@ const mapStateToProps = state => ({
 export default compose(
 	connect(mapStateToProps),
 	withStyles(styles)
-)(PickupInfo);
+)(BasicData);
