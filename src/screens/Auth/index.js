@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
@@ -122,7 +121,7 @@ class AuthPage extends Component {
 									<Button
 										type="submit"
 										variant="contained"
-										className={classNames(classes.button)}
+										className={classes.button}
 									>
 										{mode}
 									</Button>

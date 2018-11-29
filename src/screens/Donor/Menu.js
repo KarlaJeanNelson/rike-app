@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+const drawerWidth = 256;
 const menuItemsAll = [
 	{text: 'Scheduled', icon: ['far', 'clock']},
 	{text: 'Available', icon: 'share'},
@@ -23,11 +24,11 @@ const styles = theme => ({
     display: 'flex',
   },
   drawer: {
-    width: '100%',
+		width: drawerWidth,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: '100%',
+		width: drawerWidth,
   },
   content: {
     flexGrow: 1,
