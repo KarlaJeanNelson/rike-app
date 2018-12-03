@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import { Hidden, withWidth } from '@material-ui/core';
 
-import DonorMenu from './Menu';
-import NewItem from '../Items/New';
+import UserMenu from './Menu';
 import ItemList from '../Items/List';
+import NewItem from '../Items/New';
 
 const styles = theme => ({
   root: {
@@ -17,32 +18,33 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 });
 
-class DonorHome extends Component {
-
-	render() {
-		const { classes } = this.props;
+const UserHome = (props) => {
+		const { classes, history, location, item } = props;
+		console.log(props);
 		return (
 			<div className={classes.root}>
 				<Hidden smDown>
-					<DonorMenu />
+					<UserMenu history={history}/>
 				</Hidden>
 				<div className={classes.toolbar} />
-				<main>
-					<ItemList />
+				<main className={classes.root}>
+					{item.renderScreen === 'NewItem' ? <NewItem /> : <ItemList /> }
 				</main>
 			</div>
 		)
-	}
+	
 }
 
-DonorHome.propTypes = {
+UserHome.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = state => ({ state });
+const mapStateToProps = state => ({ 
+	item: state.item,
+ });
 
 export default compose(
 	connect(mapStateToProps),
 	withStyles(styles),
 	withWidth(),
-)(DonorHome);
+)(UserHome);

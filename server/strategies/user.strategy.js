@@ -31,7 +31,9 @@ passport.use('local', new LocalStrategy({
   passReqToCallback: true,
   usernameField: 'username',
 }, ((req, username, password, done) => {
-    pool.query('SELECT id, username, password FROM users WHERE username = $1', [username])
+	console.log(username);
+
+		pool.query('SELECT id, username, password FROM users WHERE username = $1', [username])
       .then((result) => {
         const user = result && result.rows && result.rows[0];
         if (user && encryptLib.comparePassword(password, user.password)) {

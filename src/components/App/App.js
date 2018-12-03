@@ -27,7 +27,8 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Home from '../../screens/Public/Home';
 import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
-import UserHome from '../../screens/Protected';
+import UserHome from '../../screens/Protected/User/index';
+import NewItem from '../../screens/Protected/Items/New';
 
 library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote, faCalendar, faCloudMeatball, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils)
 
@@ -44,31 +45,20 @@ class App extends Component {
 					<TopNav />
 					<ToolbarSpacer />
 					<Switch>
-						This is a route anyone can see, no login necessary */}
-						<Route
-							exact
-							path="/"
-							component={Home}
-						/>
-						<Route
-							path="/about"
-							component={About}
-						/>
-						<Route
-							path="/contact"
-							component={Contact}
-						/>
+						{/* These are routes anyone can see, no login necessary */}
+						<Route exact path="/" component={Home} />
+						<Route path="/about" component={About} />
+						<Route path="/contact" component={Contact} />
+
 						{/* For protected routes, the view could show one of several things on the same route.
 						Visiting localhost:3000/home will show the UserHome if the user is logged in.
-						If the user is not logged in, the ProtectedRoute will show the homepage.
+						If the user is not logged in, the ProtectedRoute will show the login screen.
 						Even though it seems like they are different pages, the user is always on localhost:3000/home */}
-						<ProtectedRoute
-							exact
-							path="/home"
-							component={UserHome}
-						/>
-						{/* If none of the other routes matched, we will redirect to the splash page. */}
-						<Route render={() => <Redirect to="/" />} />
+						<ProtectedRoute exact path="/home" component={UserHome} />
+						<ProtectedRoute path="/home/new-item" component={UserHome} />
+
+						{/* If none of the other routes match, we will be redirect to the splash page. */}
+						<Route render={() => <Redirect to="/home" />} />
 					</Switch>
 				</MuiThemeProvider>
       </Router>

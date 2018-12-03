@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { runInThisContext } from 'vm';
 
 const styles = theme => ({
   root: {
@@ -19,6 +20,11 @@ const styles = theme => ({
 	},
 	grow: {
 		flexGrow: 1,
+	},
+	card: {
+		display: 'flex',
+		flexDirection: 'column',
+		height: '100%'
 	},
 	avatar: {
 		backgroundColor: theme.palette.primary.main,
@@ -31,6 +37,9 @@ const styles = theme => ({
 	},
 	button: {
 		minWidth: 0,
+	},
+	test: {
+		border: 'solid tomato 1px'
 	},
   toolbar: theme.mixins.toolbar,
 });
@@ -45,15 +54,49 @@ const icons = {
 class ItemList extends Component {
 	state = {};
 
+	DonorCardActions = () => {
+		const { classes } = this.props;
+		return (
+			<CardActions className={classes.actions}>
+				<Button className={classes.button} size="small">Edit</Button>
+				<Button className={classes.button} size="small">Cancel</Button>
+				<div className={classes.grow} />
+				<Button className={classes.button} size="small">Complete</Button>
+			</CardActions>
+		)
+	}
+
+	BrowserCardActions = () => {
+		const { classes, item } = this.props;
+		return (
+			<CardActions className={classes.actions}>
+				<div className={classes.grow} />
+				<Button className={classes.button} size="small" onClick={(event) => this.rescueItem(item)}>Rescue</Button>
+			</CardActions>
+		)
+	}
+
+	rescueItem = item => event => {
+		const { user } = this.props;
+		this.props.dispatch({
+			type: 'CREATE_PICKUP',
+			payload: {
+				item_id: item.item_id,
+				loc_id: user.loc_id,
+				created_by: user.id,
+			}
+		})
+	}
+
 	render() {
-		const { classes, itemList } = this.props;
+		const { classes, itemList, user, location } = this.props;
 		return (
 			<div className={classes.root}>
-				<Grid container spacing={16}>
+				<Grid container spacing={16} alignItems="stretch">
 				{itemList === null || itemList.length === 0 ? null
 				: itemList.map((item, index) => (
 					<Grid item xs={12} sm={6} md={4} key={index}>
-						<Card>
+						<Card className={classes.card}>
 							<CardHeader
 								title={item.food_name}
 								subheader={`${item.qty} ${item.abbr} in ${item.number_pkgs} \u00d7 ${item.pkg_desc}`}
@@ -64,7 +107,7 @@ class ItemList extends Component {
 								}
 							/>
 							<Divider />
-							<CardContent>
+							<CardContent className={classes.grow}>
 								<Grid container spacing={8} direction="row">
 									<Grid item>
 										<Typography className={classes.icon}>
@@ -120,12 +163,10 @@ class ItemList extends Component {
 								</Grid>
 							</CardContent>
 							<Divider />
-							<CardActions className={classes.actions}>
-								<Button className={classes.button} size="small">Edit</Button>
-								<Button className={classes.button} size="small">Cancel</Button>
-								<div className={classes.grow} />
-								<Button className={classes.button} size="small">Complete</Button>
-							</CardActions>
+							{user.loc_type === 'donor' ? <this.DonorCardActions item={item} />
+								: user.loc_type === 'rescuer' ?
+								<this.BrowserCardActions item={item} />
+								: null}
 						</Card>
 					</Grid>
 				))}
@@ -140,7 +181,8 @@ ItemList.propTypes = {
 }
 
 const mapStateToProps = state => ({
-	itemList: state.item.data
+	itemList: state.item.data,
+	user: state.auth.user,
 });
 
 export default compose(

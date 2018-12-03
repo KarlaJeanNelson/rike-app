@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,28 +13,35 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import { runInThisContext } from 'vm';
 
 const drawerWidth = 256;
 const menuItems = {
 	new: 	{text: 'Create New', icon: 'plus'},
-	all: 	{text: 'All', icon: 'cloud-meatball', queryText: '%'},
-	saved: {text: 'Saved', icon: 'save', queryText: 'saved'},
-	scheduled: {text: 'Scheduled', icon: ['far', 'clock'], queryText: 'scheduled'},
-	available: {text: 'Available', icon: 'share', queryText: 'available'},
-	closed: {text: 'Closed', icon: 'archive', queryText: 'closed%'},
+	all: 	{text: 'All', icon: 'cloud-meatball', queryField: '', queryText: ''},
+	saved: {text: 'Saved', icon: 'save', queryField: 'status', queryText: 'saved'},
+	scheduled: {text: 'Scheduled', icon: ['far', 'clock'], queryField: 'status', queryText: 'scheduled'},
+	available: {text: 'Available', icon: 'share', queryField: 'status', queryText: 'available'},
+	closed: {text: 'Closed', icon: 'archive', queryField: 'status', queryText: 'closed'},
 }
+
 const menuItemsOther = [
 	menuItems.all,
 	menuItems.scheduled,
 	menuItems.available,
 	menuItems.closed
 ]
-const menuItemsOrg = [
+
+const menuItemsDonor = [
 	menuItems.all,
 	menuItems.saved,
 	menuItems.scheduled,
 	menuItems.available,
+	menuItems.closed
+]
+
+const menuItemsRescuer = [
+	menuItems.all,
+	menuItems.scheduled,
 	menuItems.closed
 ]
 
@@ -55,37 +63,58 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 });
 
-class DonorMenu extends Component {
+class UserMenu extends Component {
 	state = {
 		selectedIndex: 0,
-		params: { status: '%'},
+	}
+
+	menuItemsOrg = () => {
+		const { user } = this.props;
+		switch (user.loc_type) {
+			case 'donor':				
+				return menuItemsDonor;
+			case 'rescuer':
+				return menuItemsRescuer;
+			default:
+				return null;
+		}
 	}
 
   handleOrgListItemClick = (event, index, item) => {
+		event.preventDefault();
 		this.setState({
-			selectedIndex: index,
-			params: {
-				...this.state.params,
-				status: item.queryText,
-			}
+			selectedIndex: index
 		});
+
+		const { user } = this.props;
 		this.props.dispatch({
 			type: 'FETCH_ORG_ITEMS',
+			id: user.loc_id,
 			payload: {
-				...this.state.params,
-				status: item.queryText,
+				[item.queryField]: item.queryText,
 			},
 		})
 	};
 
-	componentDidMount() {
-		const { params } = this.state;
+	getAvailable = event => {
+		const { history } = this.props;
+		event.preventDefault();
 		this.props.dispatch({
-			type: 'FETCH_ORG_ITEMS',
+			type: 'FETCH_ITEMS',
 			payload: {
-				...params,
-				status: params.status,
-			},
+				status: 'available'
+			}
+		})
+	}
+
+	handleNew = event => {
+		const { history } = this.props;
+		this.setState({
+			selectedIndex: 0
+		})
+		this.props.dispatch({
+			type: 'RENDER_USER_HOME',
+			payload: 'NewItem',
 		})
 	}
 	
@@ -94,15 +123,48 @@ class DonorMenu extends Component {
 		return (
 			<div>
 				<Typography align='center' className={classes.content}>
-					<Button variant="contained" color="secondary">Create New</Button>
+					<Button 
+						variant="contained"
+						color="secondary"
+						onClick={this.handleNew}
+					>
+						Create New
+					</Button>
 				</Typography>
 				<Divider />
 			</div>			
 		)
-	}
+	};
+
+	BrowseButton = () => {
+		const { classes } = this.props;
+		return (
+			<div>
+				<Typography align='center' className={classes.content}>
+					<Button 
+						variant="contained"
+						color="secondary"
+						onClick={this.getAvailable}
+					>
+						Browse Available
+					</Button>
+				</Typography>
+				<Divider />
+			</div>			
+		)
+	};
+
+	componentDidMount() {
+		const { user } = this.props;
+			this.props.dispatch({
+				type: 'FETCH_ORG_ITEMS',
+				id: user.loc_id,
+				payload: {},
+			})		
+	};
 
 	render() {
-		const { classes, loc_type } = this.props;
+		const { user, classes } = this.props;
 		return (
 			<div className={classes.root}>
 				<Drawer
@@ -113,17 +175,18 @@ class DonorMenu extends Component {
 					}}
 				>
 					<div className={classes.toolbar} />
-					{loc_type === 'donor' ? <this.NewButton /> : null}
+					{user.loc_type === 'donor' ? <this.NewButton /> : <this.BrowseButton />}
 					<List>
 						<ListItem button>
-							<ListItemText primary={'Our Donations'} />
+							<ListItemText primary={`${user.loc_name}'s Items`} />
 						</ListItem>
-						{menuItemsOrg.map((item, index) => (
+						{this.menuItemsOrg().map((item, index) => (
 							<ListItem
 								button
 								key={index}
 								selected={this.state.selectedIndex === index}
 								onClick={event => this.handleOrgListItemClick(event, index, item)}
+								component={Link} to="/home"
 							>
 								<ListItemIcon>
 									<FontAwesomeIcon icon={item.icon} fixedWidth size="lg" />
@@ -135,7 +198,7 @@ class DonorMenu extends Component {
 					<Divider />
 					<List>
 						<ListItem button>
-							<ListItemText primary={'Other Donations'} />
+							<ListItemText primary={'Other Items'} />
 						</ListItem>
 						{menuItemsOther.map((item, index) => (
 							<ListItem button key={index}>
@@ -152,16 +215,16 @@ class DonorMenu extends Component {
 	}
 }
 
-DonorMenu.propTypes = {
+UserMenu.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-	loc_type: state.auth.user.loc_type,
+	user: state.auth.user,
 	state: state,
 });
 
 export default compose(
 	connect(mapStateToProps),
 	withStyles(styles)
-)(DonorMenu);
+)(UserMenu);

@@ -9,7 +9,7 @@ const AboutPage = () => (
   <div>
     <div>
       <p>
-        About Page
+				About
       </p>
     </div>
   </div>
