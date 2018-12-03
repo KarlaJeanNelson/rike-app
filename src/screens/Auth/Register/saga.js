@@ -27,7 +27,7 @@ function* registerUser(action) {
 			} else {
 				// Got some other error.
 				// Could be anything, but most common cause is that the server is not started.
-				yield put({ type: 'AUTH_FAILED_NO_CODE' });
+				yield put({ type: 'AUTH_FAILED_NO_CODE', payload: error.response });
 			}
       // yield put({type: 'AUTH_FAILED_NO_CODE'});
   }

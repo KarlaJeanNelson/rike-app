@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import { Hidden, withWidth } from '@material-ui/core';
 
-import UserMenu from './Menu';
-import NewItem from './Post/New';
-import BasicData from './Post/Basic';
-import PickupOptions from './Post/Pickup';
+import DonorMenu from './Menu';
+import NewItem from '../Items/New';
+import ItemList from '../Items/List';
 
 const styles = theme => ({
   root: {
@@ -30,11 +24,11 @@ class DonorHome extends Component {
 		return (
 			<div className={classes.root}>
 				<Hidden smDown>
-					<UserMenu />
+					<DonorMenu />
 				</Hidden>
 				<div className={classes.toolbar} />
 				<main>
-					<NewItem />
+					<ItemList />
 				</main>
 			</div>
 		)
@@ -45,7 +39,10 @@ DonorHome.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
+const mapStateToProps = state => ({ state });
+
 export default compose(
+	connect(mapStateToProps),
 	withStyles(styles),
 	withWidth(),
 )(DonorHome);

@@ -12,11 +12,13 @@ class AlertDialog extends Component {
 	}
 
   handleClose = () => {
-    this.setState({ open: false });
+		this.setState({ open: false });
+		this.props.handleClose();
 	};
 
   render() {
 		const { title, message } = this.props;
+		console.log(this.state.open);
     return (
       <div>
         <Dialog
