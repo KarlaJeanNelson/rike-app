@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
@@ -19,7 +18,7 @@ const styles = theme => ({
 });
 
 const UserHome = (props) => {
-		const { classes, history, location, item } = props;
+		const { classes, history, item } = props;
 		console.log(props);
 		return (
 			<div className={classes.root}>

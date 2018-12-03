@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const itemData = (state = null, action) => {
   switch(action.type) {
 		case 'CLEAR_ITEM_DATA':

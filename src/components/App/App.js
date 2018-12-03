@@ -28,7 +28,6 @@ import Home from '../../screens/Public/Home';
 import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
 import UserHome from '../../screens/Protected/User/index';
-import NewItem from '../../screens/Protected/Items/New';
 
 library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote, faCalendar, faCloudMeatball, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils)
 
@@ -55,7 +54,6 @@ class App extends Component {
 						If the user is not logged in, the ProtectedRoute will show the login screen.
 						Even though it seems like they are different pages, the user is always on localhost:3000/home */}
 						<ProtectedRoute exact path="/home" component={UserHome} />
-						<ProtectedRoute path="/home/new-item" component={UserHome} />
 
 						{/* If none of the other routes match, we will be redirect to the splash page. */}
 						<Route render={() => <Redirect to="/home" />} />
