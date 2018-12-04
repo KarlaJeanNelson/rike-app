@@ -38,7 +38,7 @@ const TopNav = props => {
     <header className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-					<MenuButton />
+					<MenuButton {...props}/>
           <Typography
 						color="inherit"
 						variant="h4"
