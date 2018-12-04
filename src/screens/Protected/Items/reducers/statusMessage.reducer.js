@@ -10,6 +10,10 @@ const statusMessage = (state = null, action) => {
 			return action.payload;
 		case 'FETCH_ITEMS_SUCCESS':
 			return action.payload;
+		case 'ACTION_SUCCESS':
+			return action.payload;
+		case 'ACTION_ERROR':
+			return action.payload;
     default:
       // ALWAYS have a default case in a reducer
       return state;

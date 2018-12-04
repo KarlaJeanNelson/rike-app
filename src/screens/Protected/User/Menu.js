@@ -25,24 +25,24 @@ const menuItems = {
 }
 
 const menuItemsOther = [
-	menuItems.all,
+	// menuItems.all,
 	menuItems.scheduled,
 	menuItems.available,
-	menuItems.closed
+	menuItems.closed,
 ]
 
 const menuItemsDonor = [
-	menuItems.all,
+	// menuItems.all,
 	menuItems.saved,
 	menuItems.scheduled,
 	menuItems.available,
-	menuItems.closed
+	menuItems.closed,
 ]
 
 const menuItemsRescuer = [
-	menuItems.all,
+	// menuItems.all,
 	menuItems.scheduled,
-	menuItems.closed
+	menuItems.closed,
 ]
 
 const styles = theme => ({
@@ -83,7 +83,7 @@ class UserMenu extends Component {
   handleOrgListItemClick = (event, index, item) => {
 		event.preventDefault();
 		this.setState({
-			selectedIndex: index
+			selectedIndex: index,
 		});
 
 		const { user } = this.props;
@@ -98,17 +98,20 @@ class UserMenu extends Component {
 
 	getAvailable = event => {
 		event.preventDefault();
+		this.setState({
+			selectedIndex: '',
+		})
 		this.props.dispatch({
 			type: 'FETCH_ITEMS',
 			payload: {
-				status: 'available'
+				status: 'available',
 			}
 		})
 	}
 
 	handleNew = event => {
 		this.setState({
-			selectedIndex: 0
+			selectedIndex: '',
 		})
 		this.props.dispatch({
 			type: 'RENDER_USER_HOME',
@@ -176,7 +179,7 @@ class UserMenu extends Component {
 					{user.loc_type === 'donor' ? <this.NewButton /> : <this.BrowseButton />}
 					<List>
 						<ListItem button>
-							<ListItemText primary={`${user.loc_name}'s Items`} />
+							<ListItemText primary={`My Org's Items`} />
 						</ListItem>
 						{this.menuItemsOrg().map((item, index) => (
 							<ListItem

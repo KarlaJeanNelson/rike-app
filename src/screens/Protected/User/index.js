@@ -19,7 +19,6 @@ const styles = theme => ({
 
 const UserHome = (props) => {
 		const { classes, history, item } = props;
-		console.log(props);
 		return (
 			<div className={classes.root}>
 				<Hidden smDown>
@@ -27,7 +26,7 @@ const UserHome = (props) => {
 				</Hidden>
 				<div className={classes.toolbar} />
 				<main className={classes.root}>
-					{item.renderScreen === 'NewItem' ? <NewItem /> : <ItemList /> }
+					{item.renderScreen.view === 'NewItem' ? <NewItem /> : <ItemList /> }
 				</main>
 			</div>
 		)
