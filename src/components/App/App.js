@@ -17,7 +17,8 @@ import theme from './theme';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUser, faUserSlash, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding, faCity, faPlus, faShare, faArchive } from '@fortawesome/free-solid-svg-icons';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { faPaperPlane, faSave, faUserCircle, faBlenderPhone, faAt, faStickyNote } from '@fortawesome/free-solid-svg-icons';
+import { faClock as farClock, faSave as farSave } from '@fortawesome/free-regular-svg-icons';
 
 import TopNav from '../TopNav/TopNav';
 import ToolbarSpacer from '../UI/ToolbarSpacer';
@@ -27,7 +28,7 @@ import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
 import UserHome from '../../screens/User';
 
-library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, faClock)
+library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote)
 
 class App extends Component {
   componentDidMount () {
@@ -42,9 +43,6 @@ class App extends Component {
 					<TopNav />
 					<ToolbarSpacer />
 					<Switch>
-						{/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-						{/* <Redirect exact from="/" to="/home" /> */}
-						{/* Visiting localhost:3000/home will show the home page.
 						This is a route anyone can see, no login necessary */}
 						<Route
 							exact
@@ -52,12 +50,10 @@ class App extends Component {
 							component={Home}
 						/>
 						<Route
-							exact
 							path="/about"
 							component={About}
 						/>
 						<Route
-							exact
 							path="/contact"
 							component={Contact}
 						/>
@@ -70,7 +66,7 @@ class App extends Component {
 							path="/home"
 							component={UserHome}
 						/>
-						{/* If none of the other routes matched, we will show a 404. */}
+						{/* If none of the other routes matched, we will redirect to the splash page. */}
 						<Route render={() => <Redirect to="/" />} />
 					</Switch>
 				</MuiThemeProvider>

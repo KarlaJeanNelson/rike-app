@@ -8,19 +8,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class AlertDialog extends Component {
   state = {
-    open: this.props.open,
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+		open: true,
+	}
 
   handleClose = () => {
     this.setState({ open: false });
 	};
 
   render() {
-		const { title, description } = this.props;
+		const { title, message } = this.props;
     return (
       <div>
         <Dialog
@@ -32,15 +28,12 @@ class AlertDialog extends Component {
           <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {description}
+              {message}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
+              OK
             </Button>
           </DialogActions>
         </Dialog>

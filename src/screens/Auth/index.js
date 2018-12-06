@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
@@ -9,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-// import AlertDialog from '../../components/UI/AlertDialog';
+import AlertDialog from '../../components/UI/AlertDialog';
 import Login from './Login';
 import Register from './Register';
 
@@ -34,14 +33,14 @@ const styles = theme => ({
 	}
 });
 
-const otherMode = (mode) => (mode === 'LOGIN' ? 'REGISTER' : 'LOGIN');
+const otherMode = mode => (mode === 'LOGIN' ? 'REGISTER' : 'LOGIN');
+const getTitle = mode => (mode === 'LOGIN' ? 'LOGIN ERROR' : 'REGISTRATION ERROR');
 
 class AuthPage extends Component {
   state = {
 		username: '',
 		password: '',
 		password2: '',
-		open: false,
   };
 
   login = () => {
@@ -108,9 +107,11 @@ class AuthPage extends Component {
 	}
 
   render() {
-		const { classes, mode } = this.props;
+		const { classes, mode, message } = this.props;
+		// console.log('message:', message, !!message);
     return (
-			<div className={classes.root}>			
+			<div className={classes.root}>
+				{ !!message ? <AlertDialog title={ getTitle(mode) } message={message} /> : null }
 				<Grid container spacing={16} className={classes.grow}>
 					<Grid item sm={1} md={2} lg={3}></Grid>
 					<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
@@ -122,7 +123,7 @@ class AuthPage extends Component {
 									<Button
 										type="submit"
 										variant="contained"
-										className={classNames(classes.button)}
+										className={classes.button}
 									>
 										{mode}
 									</Button>
@@ -149,7 +150,7 @@ AuthPage.propTypes = {
 
 // Name what we want from state so that we can use shorthand to get these values.
 const mapStateToProps = state => ({
-	message: state.auth.message,
+	message: state.auth.errorMessage,
 	mode: state.auth.loginMode,
 	user: state.auth.user,
 });

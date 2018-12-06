@@ -13,7 +13,6 @@ class UserHome extends Component {
 		return (
 			<div>
 				<DonorHome />
-				<DistHome />
 			</div>
 		);
 	}

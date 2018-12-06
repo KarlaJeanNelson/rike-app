@@ -1,7 +1,7 @@
-const errorMessage = (state = '', action) => {
+const errorMessage = (state = null, action) => {
 	switch (action.type) {
 		case 'CLEAR_AUTH_ERRORS':
-			return '';
+			return null;
 		case 'AUTH_INPUT_ERROR':
 			return 'Please fill out all required fields.';
 		case 'PASSWORD_TOO_SHORT':
