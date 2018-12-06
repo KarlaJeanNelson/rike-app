@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { runInThisContext } from 'vm';
 
 const styles = theme => ({
   root: {
@@ -89,7 +88,7 @@ class ItemList extends Component {
 	}
 
 	render() {
-		const { classes, itemList, user, location } = this.props;
+		const { classes, itemList, user } = this.props;
 		return (
 			<div className={classes.root}>
 				<Grid container spacing={16} alignItems="stretch">

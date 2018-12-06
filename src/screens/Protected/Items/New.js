@@ -5,7 +5,6 @@ import MaskedInput from 'react-text-mask';
 // import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DatePicker, DateTimePicker } from 'material-ui-pickers';
 import { withStyles } from '@material-ui/core/styles';

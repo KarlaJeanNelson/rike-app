@@ -97,7 +97,6 @@ class UserMenu extends Component {
 	};
 
 	getAvailable = event => {
-		const { history } = this.props;
 		event.preventDefault();
 		this.props.dispatch({
 			type: 'FETCH_ITEMS',
@@ -108,7 +107,6 @@ class UserMenu extends Component {
 	}
 
 	handleNew = event => {
-		const { history } = this.props;
 		this.setState({
 			selectedIndex: 0
 		})
