@@ -37,6 +37,7 @@ const RegisterForm = props => {
 				type="text"
 				label="Username"
 				fullWidth
+				autoFocus
 				margin="normal"
 				value={props.username}
 				onChange={handleChange('username')}
@@ -49,8 +50,20 @@ const RegisterForm = props => {
 				label="Password"
 				fullWidth
 				margin="normal"
+				helperText="Password must be at least eight characters"
 				value={props.password}
 				onChange={handleChange('password')}
+				className={classes.textField}
+			/>
+			<TextField
+				id="register-password2"
+				name="password2"
+				type="password"
+				label="Retype password"
+				fullWidth
+				margin="normal"
+				value={props.password2}
+				onChange={handleChange('password2')}
 				className={classes.textField}
 			/>
 			<TextField
@@ -95,6 +108,17 @@ const RegisterForm = props => {
 				margin="normal"
 				value={props.phone}
 				onChange={handleChange('phone')}
+				className={classes.textField}
+			/>
+			<TextField
+				id="register-location"
+				name="location"
+				type="text"
+				label="Location code"
+				fullWidth
+				margin="normal"
+				value={props.location}
+				onChange={handleChange('location')}
 				className={classes.textField}
 			/>
 		</div>

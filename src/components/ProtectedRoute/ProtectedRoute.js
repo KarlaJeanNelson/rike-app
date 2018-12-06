@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux';
-import AuthPage from '../../screens/Auth'
+import AuthPage from '../../screens/Auth/index';
 import LoginPage from '../../screens/Auth/Login';
 import RegisterPage from '../../screens/Auth/Register';
 

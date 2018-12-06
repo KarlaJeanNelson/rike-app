@@ -35,6 +35,7 @@ const LoginForm = props => {
 				type="text"
 				label="Username"
 				fullWidth
+				autoFocus
 				margin="normal"
 				value={props.username}
 				onChange={handleChange('username')}

@@ -1,41 +1,24 @@
-import { combineReducers } from 'redux';
-
-// loginMessage holds the string that will display
-// on the login screen if there's an error
-const loginMessage = (state = '', action) => {
-  switch (action.type) {
-    case 'CLEAR_LOGIN_ERROR':
-      return '';
-    case 'LOGIN_INPUT_ERROR':
-      return 'Please enter username and password.';
+const errorMessage = (state = '', action) => {
+	switch (action.type) {
+		case 'CLEAR_AUTH_ERRORS':
+			return '';
+		case 'AUTH_INPUT_ERROR':
+			return 'Please fill out all required fields.';
+		case 'PASSWORD_TOO_SHORT':
+			return 'Password must be at least eight characters.';
+		case 'PASSWORD_MISMATCH':
+			return 'Password fields must match.';
+		case 'USERNAME_TAKEN':
+			return 'That username is already taken. Please choose a different username, or go to the Login screen instead.';
+		case 'INCORRECT_LOCATION':
+			return 'Incorrect location code. Please try again.';
     case 'LOGIN_FAILED':
-      return `Oops! The username and password didn't match. Try again!`;
-    case 'LOGIN_FAILED_NO_CODE':
-      return 'Oops! Something went wrong! Is the server running?';
+      return 'Incorrect username or password. Please try again.';
+		case 'AUTH_FAILED_NO_CODE':
+			return 'Oops! Something went wrong... Is the server running?';
     default:
       return state;
   }
-};
+}
 
-// registrationMessage holds the string that will display
-// on the registration screen if there's an error
-const registrationMessage = (state = '', action) => {
-  switch (action.type) {
-    case 'CLEAR_REGISTRATION_ERROR':
-      return '';
-    case 'REGISTRATION_INPUT_ERROR':
-      return 'Please fill out all required fields.';
-    case 'REGISTRATION_FAILED':
-      return `Oops! That didn't work. The username might already be taken. Please try again.`;
-    default:
-      return state;
-  }
-};
-
-// make one object that has keys loginMode, loginMessage, registrationMessage
-// these will be on the redux state at:
-// state.errors.loginMessage and state.errors.registrationMessage
-export default combineReducers({
-  loginMessage,
-  registrationMessage,
-});
+export default errorMessage;
