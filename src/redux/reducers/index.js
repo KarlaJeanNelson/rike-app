@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import loginMode from '../../screens/Auth/Main/reducers/mode';
-import messages from '../../screens/Auth/Main/reducers/messages';
+import loginMode from '../../screens/Auth/reducers/mode';
+import messages from '../../screens/Auth/reducers/messages';
 import user from '../../screens/User/reducer';
 
 // rootReducer is the primary reducer for our entire project

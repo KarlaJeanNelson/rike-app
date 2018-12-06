@@ -36,9 +36,9 @@ const styles = theme => ({
 	}
 });
 
-const otherMode = (mode) => (mode === 'LOGIN' ? 'REGISTER' : 'LOGIN')
+const otherMode = (mode) => (mode === 'LOGIN' ? 'REGISTER' : 'LOGIN');
 
-class LoginPage extends Component {
+class AuthPage extends Component {
   state = {
 		username: '',
 		password: '',
@@ -46,6 +46,7 @@ class LoginPage extends Component {
 
   login = () => {
 		// event.preventDefault();
+		console.log(`in login`);
     if (this.state.username && this.state.password) {
       this.props.dispatch({
         type: 'LOGIN',
@@ -74,7 +75,7 @@ class LoginPage extends Component {
     }
   } // end registerUser
 
-  handleChange = propertyName => (event) => {
+  handleChange = (propertyName) => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
@@ -82,7 +83,15 @@ class LoginPage extends Component {
 
 	handleSubmit = (mode) => (event) => {
 		event.preventDefault();
-		// mode === 'LOGIN' ? this.login() : this.registerUser();
+		// console.log(`in handleSubmit`);
+		return mode === 'LOGIN' ? this.login() : this.registerUser();
+	}
+
+	clearState = () => {
+		this.setState({
+			username: '',
+			password: '',
+		})
 	}
 
   render() {
@@ -93,12 +102,12 @@ class LoginPage extends Component {
 				<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
 					<Paper className={classes.paper}>
 						<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
-						<Login handleChange={() => this.handleChange()}/>
-						{/* <Register handleChange={this.handleChange}/> */}
+						{ mode === 'LOGIN' ? <Login handleChange={() => this.handleChange()}/>: <Register handleChange={this.handleChange}/> }
+						<form onSubmit={this.handleSubmit(mode)}>
 						<Typography align="right" className={classes.spacing}>
-							<Button 
+							<Button
+								type="submit"
 								variant="contained"
-								onClick={() => {this.handleSubmit(mode)}}
 								className={classNames(classes.button)}
 							>
 								{mode}
@@ -110,6 +119,7 @@ class LoginPage extends Component {
 								{otherMode(mode)}
 							</Button>
 						</Typography>
+						</form>
 					</Paper>
 				</Grid>
 				<Grid item sm={1} md={2} lg={3}></Grid>
@@ -118,7 +128,7 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
+AuthPage.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
@@ -133,4 +143,4 @@ const mapStateToProps = state => ({
 export default compose(
 	connect(mapStateToProps),
 	withStyles(styles)
-)(LoginPage);
+)(AuthPage);

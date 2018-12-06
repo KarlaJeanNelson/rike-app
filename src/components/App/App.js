@@ -14,13 +14,12 @@ import 'typeface-biorhyme';
 import theme from './theme';
 
 import TopNav from '../UI/TopNav';
-import Footer from '../Footer/Footer';
-
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import Home from '../../screens/Public/Home/Home';
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// import Home from '../../screens/Public/Home/Home';
 import About from '../../screens/Public/About/About';
 import Contact from '../../screens/Public/Contact/Contact';
-import UserHome from '../../screens/User/Home';
+// import UserHome from '../../screens/User/Home';
+import DonorHome from '../../screens/Donor/Home';
 
 class App extends Component {
   componentDidMount () {
@@ -41,7 +40,7 @@ class App extends Component {
 						<Route
 							exact
 							path="/"
-							component={Home}
+							component={DonorHome}
 						/>
 						<Route
 							exact
@@ -57,15 +56,14 @@ class App extends Component {
 						Visiting localhost:3000/home will show the UserHome if the user is logged in.
 						If the user is not logged in, the ProtectedRoute will show the homepage.
 						Even though it seems like they are different pages, the user is always on localhost:3000/home */}
-						<ProtectedRoute
+						{/* <ProtectedRoute
 							exact
 							path="/home"
 							component={UserHome}
-						/>
+						/> */}
 						{/* If none of the other routes matched, we will show a 404. */}
 						<Route render={() => <Redirect to="/" />} />
 					</Switch>
-					<Footer />
 				</MuiThemeProvider>
       </Router>
   )}

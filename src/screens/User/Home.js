@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import DonorHome from '../Donor/Home/Home'
-import DistHome from '../Dist/Home/Home';
+import DonorHome from '../Donor/Home'
+import DistHome from '../Dist/Home';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
