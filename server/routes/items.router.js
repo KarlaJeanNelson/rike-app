@@ -3,17 +3,36 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
-router.get('/org', rejectUnauthenticated, (req, res) => {
-	const { query, user } = req;
-	let qryString = ` WHERE loc_id=$1`
-	Object.keys(query).forEach((value, index) => (qryString = qryString + ` AND ${value} ILIKE $${index+2}`))
-	const sqlText = `SELECT * FROM item_info ${qryString} ORDER BY pickup_end, item_id;`;
-	pool.query(sqlText, [user.loc_id, ...Object.values(query)])
+router.get('/org/:id', rejectUnauthenticated, (req, res) => {
+	const { query, params } = req;
+	let qryString = `SELECT * FROM item_info WHERE (loc_id=$1 OR rescue_org_id=$1)`;
+	if (query) {
+		Object.keys(query).forEach((value, index) => (qryString = qryString + ` AND ${value}=$${index+2}`))
+	}
+	const sqlText = `${qryString} ORDER BY pickup_end, item_id;`
+	// console.log(sqlText, [params.id, ...Object.values(query)]);
+	pool.query(sqlText, [params.id, ...Object.values(query)])
 		.then((result) => { res.status(200).send(result.rows); })
 		.catch((err) => {
 			res.status(500).send(err.stack);
 		})
-});
+})
+
+router.get('/', rejectUnauthenticated, (req, res) => {
+	console.log(req.query);
+	const { query, params } = req;
+	let qryString = `SELECT * FROM item_info WHERE ''=''`;
+	if (query) {
+		Object.keys(query).forEach((value, index) => (qryString = qryString + ` AND ${value}=$${index+1}`))
+	}
+	const sqlText = `${qryString} ORDER BY pickup_end, item_id;`
+	// console.log(sqlText, [ ...Object.values(query) ]);
+	pool.query(sqlText, [...Object.values(query)])
+		.then((result) => { res.status(200).send(result.rows); })
+		.catch((err) => {
+			res.status(500).send(err.stack);
+		})
+})
 
 router.post('/', rejectUnauthenticated, (req, res) => {
 	const item = req.body.itemData

@@ -41,7 +41,8 @@ function* logoutUser(action) {
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
-    };
+		};
+		yield put({ type: 'SET_LIST_OR_NEW', payload: 'ItemList' })
 
     // the config includes credentials which
     // allow the server session to recognize the user

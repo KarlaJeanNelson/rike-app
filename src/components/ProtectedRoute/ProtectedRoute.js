@@ -14,8 +14,8 @@ import AuthPage from '../../screens/Auth/index';
 // and by checking req.user for authorization
 
 const ProtectedRoute = (props) => {
-  // Using destructuring, this takes ComponentToProtect from component
-  // prop and grabs all other props to pass them along to Route
+  // Using destructuring, this takes ComponentToProtect from component prop
+  // and grabs all other props to pass them along to Route
   const {
     // Alias prop 'component' as 'ComponentToProtect'
     component: ComponentToProtect,
@@ -26,20 +26,6 @@ const ProtectedRoute = (props) => {
 
 	let ComponentToShow;
 
-  // if(user.id) {
-  //   // if the user is logged in (only logged in users have ids)
-  //   // show the component that is protected
-  //   ComponentToShow = ComponentToProtect;
-  // } else if (mode === 'LOGIN') {
-  //   // if they are not logged in, check the loginMode on Redux State
-  //   // if the mode is 'login', show the LoginPage
-  //   ComponentToShow = LoginPage;
-  // } else {
-  //   // the the user is not logged in and the mode is not 'login'
-  //   // show the RegisterPage
-  //   ComponentToShow = RegisterPage;
-	// }
-	
 	if (user.id) {
 		ComponentToShow = ComponentToProtect;
 	} else {
@@ -59,8 +45,6 @@ const ProtectedRoute = (props) => {
 
 // Instead of taking everything from state, we just want the user and loginMode
 // to determine which page we should show the user
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({ user, loginMode }) => ({ user, loginMode });
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,

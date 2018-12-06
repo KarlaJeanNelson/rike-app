@@ -5,6 +5,7 @@ import MaskedInput from 'react-text-mask';
 // import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DatePicker, DateTimePicker } from 'material-ui-pickers';
 import { withStyles } from '@material-ui/core/styles';
@@ -161,20 +162,28 @@ class NewItem extends Component {
 		})
 	}
 
-	// TODO: error checking for blank form before saving to db.
 	handleSubmit = status => event => {
 		event.preventDefault();
+		const { user } = this.props
 		if (!this.state.foodName) {
 			alert('Sorry, pal. Must give food a name before saving record.')
 		} else {
 			this.props.dispatch({
 				type: 'CREATE_ITEM',
+				id: user.loc_id,
 				payload: {
 					status: status,
 					itemData: this.state,
 				}
 			})
 		}
+	}
+
+	handleCancel = event => {
+		this.props.dispatch({
+			type: 'SET_LIST_OR_NEW',
+			payload: 'ItemList',
+		})
 	}
 
 	componentDidMount() {
@@ -194,6 +203,7 @@ class NewItem extends Component {
 
 	render() {
 		const { classes } = this.props;
+		console.log(this.props);
 		return (
 			<div className={classes.root}>
 				<Paper className={classes.paper}>
@@ -203,6 +213,7 @@ class NewItem extends Component {
 								<Typography variant="h4">New Donation</Typography>
 								<div className={classes.grow} />
 								<Button onClick={this.demoData} className={classes.Button}>Demo</Button>
+								<Button onClick={this.handleCancel} className={classes.Button}>Cancel</Button>
 							</Grid>
 							<Grid item xs={12} className={classes.item}>
 								<Typography variant="h5">General Information</Typography>
