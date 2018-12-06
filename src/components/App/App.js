@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from 'react-router-dom';
-import {connect} from 'react-redux';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,18 +15,19 @@ import 'typeface-biorhyme';
 import theme from './theme';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faUserSlash, faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faUser, faUserSlash, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faCity, faPlus, faShare, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 
-import TopNav from '../UI/TopNav';
+import TopNav from '../TopNav/TopNav';
+import ToolbarSpacer from '../UI/ToolbarSpacer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import Home from '../../screens/Public/Home/Home';
-import About from '../../screens/Public/About/About';
-import Contact from '../../screens/Public/Contact/Contact';
-import UserHome from '../../screens/User/Home';
-import DonorHome from '../../screens/Donor/Home';
+import Home from '../../screens/Public/Home';
+import About from '../../screens/Public/About';
+import Contact from '../../screens/Public/Contact';
+import UserHome from '../../screens/User';
 
-library.add(faUser, faUserSlash, faStroopwafel)
+library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, faClock)
 
 class App extends Component {
   componentDidMount () {
@@ -39,6 +40,7 @@ class App extends Component {
 				<MuiThemeProvider theme={theme}>
 					<CssBaseline />
 					<TopNav />
+					<ToolbarSpacer />
 					<Switch>
 						{/* Visiting localhost:3000 will redirect to localhost:3000/home */}
 						{/* <Redirect exact from="/" to="/home" /> */}
@@ -47,7 +49,7 @@ class App extends Component {
 						<Route
 							exact
 							path="/"
-							component={DonorHome}
+							component={Home}
 						/>
 						<Route
 							exact

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import AlertDialog from '../../components/UI/AlertDialog';
+// import AlertDialog from '../../components/UI/AlertDialog';
 import Login from './Login';
 import Register from './Register';
 
@@ -109,7 +108,7 @@ class AuthPage extends Component {
 	}
 
   render() {
-		const { classes, message, mode } = this.props;
+		const { classes, mode } = this.props;
     return (
 			<div className={classes.root}>			
 				<Grid container spacing={16} className={classes.grow}>
@@ -150,9 +149,9 @@ AuthPage.propTypes = {
 
 // Name what we want from state so that we can use shorthand to get these values.
 const mapStateToProps = state => ({
-	message: state.message,
-	mode: state.loginMode,
-	user: state.user,
+	message: state.auth.message,
+	mode: state.auth.loginMode,
+	user: state.auth.user,
 });
 
 export default compose(
