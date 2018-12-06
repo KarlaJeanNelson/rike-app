@@ -16,7 +16,8 @@ import theme from './theme';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUser, faUserSlash, faHome } from '@fortawesome/free-solid-svg-icons'
-import { faBuilding, faCity, faPlus, faShare, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faCity, faPlus, faCloudMeatball, faShare, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane, faSave, faUserCircle, faBlenderPhone, faAt, faStickyNote } from '@fortawesome/free-solid-svg-icons';
 import { faClock as farClock, faSave as farSave } from '@fortawesome/free-regular-svg-icons';
 
@@ -26,9 +27,9 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Home from '../../screens/Public/Home';
 import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
-import UserHome from '../../screens/User';
+import UserHome from '../../screens/Protected';
 
-library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote)
+library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote, faCalendar, faCloudMeatball, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils)
 
 class App extends Component {
   componentDidMount () {

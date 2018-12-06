@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import classNames from 'classnames';
+import MaskedInput from 'react-text-mask';
+// import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,8 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import EventIcon from '@material-ui/icons/Event';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 const styles = theme => ({
   root: {
@@ -29,10 +33,14 @@ const styles = theme => ({
 		padding: 24,
 	},
 	item: {
-		// border: 'solid tomato 1px',
-		// background: 'powderblue',
 		display: 'flex',
-		alignItems: 'flex-end',
+		alignItems: 'flex-start',
+	},
+	pickup: {
+		display: 'flex',
+		direction: 'column',
+		justify: 'space-between',
+		alignItems: 'stretch',
 	},
 	spacing: {
 		margin: 0,
@@ -48,8 +56,35 @@ const styles = theme => ({
 	grey: {
 		color: theme.palette.grey[600],
 	},
+	test: {
+		border: 'solid tomato 1px',
+		background: 'powderblue',
+	},
+	test2: {
+		border: 'solid lime 1px',
+		background: 'yellow',
+	},
   toolbar: theme.mixins.toolbar,
 });
+
+const TextMaskCustom = props => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={inputRef}
+      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+      showMask
+			keepCharPositions={true}
+    />
+  );
+}
+
+TextMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
 
 const units = [
 	{ id: 10, abbr: 'Kg' },
@@ -57,12 +92,54 @@ const units = [
 	{ id: 3, abbr: 'lb' },
 ]
 
+const initialState = {
+	qtyUnit: 3,
+	expDate: null,
+	pickupStart: null,
+	pickupEnd: null,
+	contactEmail: '',
+	contactName: '',
+	contactPhone: '',
+	contactNotes: '',
+	foodName: '',
+	notes: '',
+	numberPkgs: '',
+	pkgDesc: '',
+	pickupNotes: '',
+	prepInstructions: '',
+	qty: '',
+	storageInstructions: ''
+}
+
 class NewItem extends Component {
-	state = {
-		qtyUnit: 3,
-		expDate: moment().add(1, 'w').endOf('day'),
-		pickupStart: moment().startOf('d').add(1, 'd'),
-		pickupEnd: moment().endOf('d').add(1, 'd'),
+	state = initialState;
+
+	demoData = event => {
+		// event.preventDefault();
+		this.setState({
+			expDate: moment().add(1, 'w').endOf('day'), // 1 week from today
+			pickupStart: moment().startOf('d').add({days: 1, hours: 7}), // tomorrow 7:00 am
+			pickupEnd: moment().startOf('d').add({days: 1, hours: 8}), // tomorrow 8:00 am
+			foodName: 'Black beans',
+			notes: 'Contains meat products. May contain allergens.',
+			numberPkgs: '2',
+			pkgDesc: '5-gal pails',
+			pickupNotes: 'Please use the deliveries door.',
+			prepInstructions: 'Preheat oven to 450F. Bake for 45 min.',
+			qty: '20',
+			qtyUnit: 10,
+			storageInstructions: 'Keep refrigerated or frozen until use.',
+		})
+		this.currentUser();
+	}
+
+	currentUser = () => {
+		const { user } = this.props;
+		this.setState({
+			contactName: user.full_name,
+			contactPhone: user.user_phone,
+			contactEmail: user.email,
+		})
 	}
 
   handleChange = propName => event => {
@@ -72,8 +149,8 @@ class NewItem extends Component {
 	}
 
 	setDate = propName => date => {
-		let setToDate = date;
-		console.log(date);
+		let setToDate = new Date(date);
+		console.log(setToDate);
 		// For expiration date, set to end of day
 		if (propName === 'expDate') {
 			setToDate = moment(setToDate).endOf('d');
@@ -84,30 +161,48 @@ class NewItem extends Component {
 		})
 	}
 
-	handleSubmit = event => {
+	// TODO: error checking for blank form before saving to db.
+	handleSubmit = status => event => {
 		event.preventDefault();
-		this.props.dispatch({
-			type: 'SET_ITEM_DATA',
-			payload: this.state,
+		if (!this.state.foodName) {
+			alert('Sorry, pal. Must give food a name before saving record.')
+		} else {
+			this.props.dispatch({
+				type: 'CREATE_ITEM',
+				payload: {
+					status: status,
+					itemData: this.state,
+				}
+			})
+		}
+	}
+
+	componentDidMount() {
+		const { user } = this.props;
+		this.setState({
+			createdById: user.id,
+			locId: user.loc_id,
 		})
 	}
 
-	componentWillUnmount() {
-		this.props.dispatch({
-			type: 'SET_ITEM_DATA',
-			payload: this.state,
-		})
-	}
+	// componentWillUnmount() {
+	// 	this.props.dispatch({
+	// 		type: 'SET_ITEM',
+	// 		payload: this.state,
+	// 	})
+	// }
 
 	render() {
 		const { classes } = this.props;
 		return (
 			<div className={classes.root}>
 				<Paper className={classes.paper}>
-					<form onSubmit={this.handleSubmit}>
+					<form onSubmit={this.handleSubmit('available')}>
 						<Grid container spacing={16}>
 							<Grid item xs={12} className={classes.item}>
 								<Typography variant="h4">New Donation</Typography>
+								<div className={classes.grow} />
+								<Button onClick={this.demoData} className={classes.Button}>Demo</Button>
 							</Grid>
 							<Grid item xs={12} className={classes.item}>
 								<Typography variant="h5">General Information</Typography>
@@ -118,76 +213,86 @@ class NewItem extends Component {
 									id="newFoodName"
 									name="foodName"
 									label="Food name"
-									InputLabelProps={{
-										shrink: true,
-									}}
 									type="text"
 									fullWidth
 									autoFocus
-									onChange={this.handleChange('food_name')}
+									required
+									value={this.state.foodName}
+									onChange={this.handleChange('foodName')}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={3} className={classes.item}>
 								<DatePicker
-									label="Use by date"
 									id="newExpDate"
 									name="expDate"
+									label="Use by date"
+									placeholder="mm/dd/yyyy"
 									fullWidth
+									required
 									allowKeyboardControl
+									animateYearScrolling={false}
 									disablePast
 									format="MM/DD/YYYY"
-										showTodayButton
+									keyboard
+									keyboardIcon={<EventIcon />}
+									leftArrowIcon={<KeyboardArrowLeft />}
+									rightArrowIcon={<KeyboardArrowRight />}
+									showTodayButton
 									minDateMessage="Whoa, time traveller! Try again."
 									value={this.state.expDate}
 									onChange={this.setDate('expDate')}
 								/>
 							</Grid>
-							<Grid item xs={12} sm={3} className={classes.item}>
-								<TextField
-									id="newQty"
-									name="qty"
-									type="number"
-									label="Quantity"
-									InputLabelProps={{
-										shrink: true,
-									}}
-									onChange={this.handleChange('qty')}
-									className={classes.grow}
-								/>
-								<TextField
-									id="newQtyUnit"
-									select
-									name="qtyUnit"
-									value={this.state.qtyUnit}
-									onChange={this.handleChange('qtyUnit')}
-								>
-									{units.map(option => (
-										<MenuItem key={option.id} value={option.id}>
-											{option.abbr}
-										</MenuItem>
-									))}
-								</TextField>
+							
+							<Grid item xs={12} sm={3}>
+								<Grid container spacing={0} alignItems="flex-end">
+									<TextField
+										id="newQty"
+										name="qty"
+										type="number"
+										label="Quantity"
+										required
+										value={this.state.qty}
+										onChange={this.handleChange('qty')}
+										className={classes.grow}
+									/>
+									<TextField
+										id="newQtyUnit"
+										select
+										name="qtyUnit"
+										required
+										value={this.state.qtyUnit}
+										onChange={this.handleChange('qtyUnit')}
+									>
+										{units.map(option => (
+											<MenuItem key={option.id} value={option.id}>
+												{option.abbr}
+											</MenuItem>
+										))}
+									</TextField>
+								</Grid>
 							</Grid>
 							<Grid item xs={12} sm={9} className={classes.item}>
 								<TextField
 									id="newNumberPkgs"
 									name="newNumberPkgs"
 									label="Containers"
-									InputLabelProps={{
-										shrink: true,
-									}}
 									type="number"
-									onChange={this.handleChange('number_pkgs')}
 									placeholder="Number"
+									required
+									value={this.state.numberPkgs}
+									onChange={this.handleChange('numberPkgs')}
 								/>
 								<TextField
 									id="newPkgDesc"
 									name="pkgDesc"
 									label="Description"
-									type="text"
-									onChange={this.handleChange('email')}
-									className={classes.grow}
 									placeholder="E.g., five-gallon pails"
+									type="text"
+									required
+									value={this.state.pkgDesc}
+									onChange={this.handleChange('pkgDesc')}
+									className={classes.grow}
 								/>
 							</Grid>
 							<Grid item xs={12} md={6} className={classes.item}>
@@ -196,8 +301,11 @@ class NewItem extends Component {
 									name="storageInst"
 									type="text"
 									label="Storage instructions"
+									placeholder="E.g., must be refrigerated"
 									fullWidth
-									onChange={this.handleChange('storage_instructions')}
+									required
+									value={this.state.storageInstructions}
+									onChange={this.handleChange('storageInstructions')}
 								/>
 							</Grid>
 							<Grid item xs={12} md={6} className={classes.item}>
@@ -206,8 +314,11 @@ class NewItem extends Component {
 									name="prepInts"
 									type="text"
 									label="Preparation instructions"
+									placeholder="E.g., heat at 350&#176;F for 35 min"
 									fullWidth
-									onChange={this.handleChange('prep_instructions')}
+									required
+									value={this.state.prepInstructions}
+									onChange={this.handleChange('prepInstructions')}
 								/>
 							</Grid>
 							<Grid item xs={12} className={classes.item}>
@@ -216,24 +327,35 @@ class NewItem extends Component {
 									name="notes"
 									type="text"
 									label="Other notes or instructions"
+									placeholder="E.g., allergen information, special diet suitability, etc."
 									fullWidth
+									value={this.state.notes}
 									onChange={this.handleChange('notes')}
 								/>
 							</Grid>
 
+							<Grid item xs={12} />
 							<Grid item xs={12} className={classes.item}>
 								<Typography variant="h5">pickup information</Typography>
 							</Grid>
-							<Grid item xs={12} sm={6} md={4} lg={3} className={classes.item}>
+							<Grid item xs={12} md={6} className={classes.item}>
 								<DateTimePicker
-									label="Pickup window start"
 									id="newPickupStart"
 									name="pickupDate"
+									label="Pickup window start"
+									placeholder="mm/dd/yyyy h:mm AM/PM"
 									fullWidth
-									ampm
+									required
 									allowKeyboardControl
+									animateYearScrolling={false}
+									ampm
 									autoOk
 									disablePast
+									format="ddd MM/DD/YYYY h:mm A"
+									keyboard
+									keyboardIcon={<ScheduleIcon />}
+									leftArrowIcon={<KeyboardArrowLeft />}
+									rightArrowIcon={<KeyboardArrowRight />}
 									showTodayButton
 									maxDate={this.state.pickupEnd}
 									maxDateMessage="Start time must be before end time."
@@ -241,16 +363,22 @@ class NewItem extends Component {
 									onChange={this.setDate('pickupStart')}
 								/>
 							</Grid>
-							<Grid item xs={12} sm={6} md={4} lg={3} className={classes.item}>
+							<Grid item xs={12} md={6} className={classes.item}>
 								<DateTimePicker
-									label="Pickup window end"
 									id="newPickupEnd"
 									name="pickupDate"
+									label="Pickup window end"
+									placeholder="mm/dd/yyyy h:mm AM/PM"
 									fullWidth
+									required
+									animateYearScrolling={false}
 									ampm
-									allowKeyboardControl
-									autoOk
 									disablePast
+									format="ddd MM/DD/YYYY h:mm A"
+									keyboard
+									keyboardIcon={<ScheduleIcon />}
+									leftArrowIcon={<KeyboardArrowLeft />}
+									rightArrowIcon={<KeyboardArrowRight />}
 									showTodayButton
 									minDate={this.state.pickupStart}
 									minDateMessage="End time must be after start time."
@@ -260,18 +388,21 @@ class NewItem extends Component {
 									onChange={this.setDate('pickupEnd')}
 								/>
 							</Grid>
-							<Grid item className={classNames(classes.item, classes.grow)}>
+							<Grid item xs={12} className={classes.item}>
 								<TextField
 									id="newPickupNotes"
 									name="notes"
+									label="Pickup notes"
 									type="text"
-									label="Pickup instructions"
 									placeholder="E.g., come to the door in the alley behind the building."
 									fullWidth
-									onChange={this.handleChange('pickup_notes')}
+									multiline
+									value={this.state.pickupNotes}
+									onChange={this.handleChange('pickupNotes')}
 								/>
 							</Grid>
 
+							<Grid item xs={12} />
 							<Grid item xs={12} className={classes.item}>
 								<Typography variant="h5">contact information</Typography>
 							</Grid>
@@ -282,6 +413,8 @@ class NewItem extends Component {
 									type="text"
 									label="Name"
 									fullWidth
+									required
+									value={this.state.contactName}
 									onChange={this.handleChange('contactName')}
 									InputProps={{
 										startAdornment: (
@@ -299,6 +432,8 @@ class NewItem extends Component {
 									type="text"
 									label="Phone"
 									fullWidth
+									required
+									value={this.state.contactPhone}
 									onChange={this.handleChange('contactPhone')}
 									InputProps={{
 										startAdornment: (
@@ -306,7 +441,9 @@ class NewItem extends Component {
 												<FontAwesomeIcon icon="blender-phone" size="lg" className={classes.grey} />
 											</InputAdornment>
 										),
+										inputComponent: TextMaskCustom,
 									}}
+									
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6} md={4} className={classes.item}>
@@ -316,6 +453,8 @@ class NewItem extends Component {
 									type="text"
 									label="E-mail"
 									fullWidth
+									required
+									value={this.state.contactEmail}
 									onChange={this.handleChange('contactEmail')}
 									InputProps={{
 										startAdornment: (
@@ -332,8 +471,9 @@ class NewItem extends Component {
 									name="contactNotes"
 									type="text"
 									label="Notes"
-									placeholder="E.g., responds fastest to text message."
+									placeholder="E.g., responds fastest to text messages"
 									fullWidth
+									value={this.state.contactNotes}
 									onChange={this.handleChange('contactNotes')}
 									InputProps={{
 										startAdornment: (
@@ -349,20 +489,21 @@ class NewItem extends Component {
 								<div className={classes.grow} />
 								<Typography align="right" className={classes.spacing}>
 									<Button
-										variant="contained"
-										className={classes.button}
-									>
-										<FontAwesomeIcon icon="save" size="lg" className={classes.leftIcon}/>
-										save
-									</Button>
-									<Button
 										type="submit"
 										variant="contained"
-										color="primary"
+										color="secondary"
 										className={classes.button}
 									>
 										<FontAwesomeIcon icon="paper-plane" size="lg" className={classes.leftIcon}/>
 										submit
+									</Button>
+									<Button
+										variant="contained"
+										className={classes.button}
+										onClick={this.handleSubmit('saved')}
+									>
+										<FontAwesomeIcon icon="save" size="lg" className={classes.leftIcon}/>
+										save
 									</Button>
 								</Typography>
 							</Grid>
@@ -379,7 +520,8 @@ NewItem.propTypes = {
 }
 
 const mapStateToProps = state => ({
-	state
+	user: state.auth.user,
+	item: state.item
 });
 
 export default compose(

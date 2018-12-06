@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MaskedInput from 'react-text-mask';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
@@ -27,6 +28,25 @@ const styles = theme => ({
 	},
 })
 
+const TextMaskCustom = props => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={inputRef}
+      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+      showMask
+			keepCharPositions={true}
+    />
+  );
+}
+
+TextMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
+
 const RegisterForm = props => {
 	const { classes, handleChange } = props;
 	return (
@@ -36,6 +56,7 @@ const RegisterForm = props => {
 				name="username"
 				type="text"
 				label="Username"
+				required
 				fullWidth
 				autoFocus
 				margin="normal"
@@ -48,6 +69,7 @@ const RegisterForm = props => {
 				name="password"
 				type="password"
 				label="Password"
+				required
 				fullWidth
 				margin="normal"
 				helperText="Password must be at least eight characters"
@@ -60,6 +82,7 @@ const RegisterForm = props => {
 				name="password2"
 				type="password"
 				label="Retype password"
+				required
 				fullWidth
 				margin="normal"
 				value={props.password2}
@@ -71,6 +94,7 @@ const RegisterForm = props => {
 				name="firstname"
 				type="text"
 				label="First name"
+				required
 				fullWidth
 				margin="normal"
 				value={props.firstname}
@@ -82,6 +106,7 @@ const RegisterForm = props => {
 				name="lastname"
 				type="text"
 				label="Last name"
+				required
 				fullWidth
 				margin="normal"
 				value={props.lastname}
@@ -93,6 +118,7 @@ const RegisterForm = props => {
 				name="email"
 				type="text"
 				label="E-mail address"
+				required
 				fullWidth
 				margin="normal"
 				value={props.email}
@@ -104,17 +130,22 @@ const RegisterForm = props => {
 				name="phone"
 				type="text"
 				label="Phone number"
+				required
 				fullWidth
 				margin="normal"
 				value={props.phone}
 				onChange={handleChange('phone')}
 				className={classes.textField}
+				InputProps={{
+					inputComponent: TextMaskCustom,
+				}}
 			/>
 			<TextField
 				id="register-location"
 				name="location"
 				type="text"
 				label="Location code"
+				required
 				fullWidth
 				margin="normal"
 				value={props.location}

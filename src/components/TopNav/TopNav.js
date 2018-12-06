@@ -45,7 +45,7 @@ const TopNav = props => {
 						className={classNames(classes.grow, classes.logo)}
 						component={Link} to="/"
 					>
-							LOGO
+							rike
           </Typography>
 					<Button component={Link} to="/" color="inherit">Home</Button>
 					<Button component={Link} to="/about" color="inherit">About</Button>

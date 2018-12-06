@@ -45,7 +45,7 @@ class AuthPage extends Component {
 
   login = () => {
 		// event.preventDefault();
-		console.log(`in login`, this.state);
+		// console.log(`in login`, this.state);
     if (this.state.username && this.state.password) {
       this.props.dispatch({
         type: 'LOGIN',
@@ -77,7 +77,13 @@ class AuthPage extends Component {
     } else {
       this.props.dispatch({type: 'AUTH_INPUT_ERROR'});
     }
-  } // end registerUser
+	} // end registerUser
+	
+	handleClose = () => {
+		this.props.dispatch({
+			type: 'CLEAR_AUTH_ERRORS'
+		});
+	}
 
   handleChange = (propertyName) => (event) => {
     this.setState({
@@ -87,7 +93,7 @@ class AuthPage extends Component {
 
 	handleSubmit = (mode) => (event) => {
 		event.preventDefault();
-		console.log(`in handleSubmit`);
+		// console.log(`in handleSubmit`);
 		return mode === 'LOGIN' ? this.login() : this.registerUser();
 	}
 
@@ -111,7 +117,7 @@ class AuthPage extends Component {
 		// console.log('message:', message, !!message);
     return (
 			<div className={classes.root}>
-				{ !!message ? <AlertDialog title={ getTitle(mode) } message={message} /> : null }
+				{ !!message ? <AlertDialog title={getTitle(mode)} message={message} handleClose={this.handleClose} open={!!message} /> : null }
 				<Grid container spacing={16} className={classes.grow}>
 					<Grid item sm={1} md={2} lg={3}></Grid>
 					<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
@@ -148,7 +154,6 @@ AuthPage.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-// Name what we want from state so that we can use shorthand to get these values.
 const mapStateToProps = state => ({
 	message: state.auth.errorMessage,
 	mode: state.auth.loginMode,

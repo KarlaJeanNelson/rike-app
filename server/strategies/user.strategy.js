@@ -8,7 +8,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  pool.query('SELECT * FROM users WHERE id = $1', [id]).then((result) => {
+  pool.query('SELECT * FROM user_info WHERE id = $1', [id]).then((result) => {
     // Handle Errors
     const user = result && result.rows && result.rows[0];
 
@@ -21,7 +21,7 @@ passport.deserializeUser((id, done) => {
       done(null, user);
     }
   }).catch((err) => {
-    console.log('query err ', err);
+    console.log(err);
     done(err);
   });
 });
@@ -31,7 +31,7 @@ passport.use('local', new LocalStrategy({
   passReqToCallback: true,
   usernameField: 'username',
 }, ((req, username, password, done) => {
-    pool.query('SELECT * FROM users WHERE username = $1', [username])
+    pool.query('SELECT id, username, password FROM users WHERE username = $1', [username])
       .then((result) => {
         const user = result && result.rows && result.rows[0];
         if (user && encryptLib.comparePassword(password, user.password)) {
@@ -45,7 +45,7 @@ passport.use('local', new LocalStrategy({
           done(null, false);
         }
       }).catch((err) => {
-        console.log('error', err);
+        console.log(err);
         done(null, {});
       });
   })));
