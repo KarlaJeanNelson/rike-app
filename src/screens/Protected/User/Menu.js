@@ -85,7 +85,6 @@ class UserMenu extends Component {
 		this.setState({
 			selectedIndex: index,
 		});
-
 		const { user } = this.props;
 		this.props.dispatch({
 			type: 'FETCH_ORG_ITEMS',

@@ -18,6 +18,11 @@ const theme = createMuiTheme({
 		}
 	},
 	typography: {
+		h1: {
+			fontFamily: `'Raleway', 'Roboto', 'Arial', sans-serif`,
+			textTransform: 'uppercase',
+			textAlign: 'center',
+		},
 		h4: {
 			fontFamily: `'Karla', 'Roboto', 'Arial', sans-serif`,
 			textTransform: 'uppercase',

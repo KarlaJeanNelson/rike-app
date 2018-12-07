@@ -12,6 +12,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
 import 'typeface-karla';
 import 'typeface-biorhyme';
+import 'typeface-raleway';
 import theme from './theme';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -51,7 +52,7 @@ class App extends Component {
 						If the user is not logged in, the ProtectedRoute will show the login screen.
 						Even though it seems like they are different pages, the user is always on localhost:3000/home */}
 						<ProtectedRoute exact path="/home" component={UserHome} />
-
+						<ProtectedRoute path="/home/:loc_uuid" component={UserHome} />
 						{/* If none of the other routes match, we will be redirect to the splash page. */}
 						<Route render={() => <Redirect to="/home" />} />
 					</Switch>

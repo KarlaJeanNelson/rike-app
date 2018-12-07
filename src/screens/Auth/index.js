@@ -41,6 +41,7 @@ class AuthPage extends Component {
 		username: '',
 		password: '',
 		password2: '',
+		uuid: this.props.match.params.loc_uuid,
   };
 
   login = () => {
@@ -102,6 +103,7 @@ class AuthPage extends Component {
 			username: '',
 			password: '',
 			password2: '',
+			loc_uuid: '',
 		});
 	}
 
@@ -110,6 +112,17 @@ class AuthPage extends Component {
 			type: 'TOGGLE_MODE',
 			payload: `SET_TO_${otherMode(mode)}_MODE`
 		});
+	}
+
+	componentDidMount() {
+		const {loc_uuid} = this.props.match.params
+		console.log(loc_uuid, this.props.mode);
+		if (this.props.mode === 'LOGIN' && loc_uuid) {
+			this.props.dispatch({
+				type: 'TOGGLE_MODE',
+				payload: `SET_TO_REGISTER_MODE`
+			});	
+		}
 	}
 
   render() {
@@ -124,7 +137,7 @@ class AuthPage extends Component {
 						<Paper className={classes.paper}>
 							<form onSubmit={this.handleSubmit(mode)}>
 								<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
-								{ mode === 'LOGIN' ? <Login handleChange={this.handleChange}/> : <Register handleChange={this.handleChange} /> }
+								{ mode === 'LOGIN' ? <Login handleChange={this.handleChange}/> : <Register handleChange={this.handleChange} {...this.props} /> }
 								<Typography align="right" className={classes.spacing}>
 									<Button
 										type="submit"

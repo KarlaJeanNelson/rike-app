@@ -48,7 +48,7 @@ TextMaskCustom.propTypes = {
 };
 
 const RegisterForm = props => {
-	const { classes, handleChange } = props;
+	const { classes, handleChange, match } = props;
 	return (
 		<div className={classes.root}>
 			<TextField
@@ -148,9 +148,21 @@ const RegisterForm = props => {
 				required
 				fullWidth
 				margin="normal"
-				value={props.location}
-				onChange={handleChange('location')}
+				value={props.lod_id}
+				onChange={handleChange('loc_id')}
 				className={classes.textField}
+			/>
+			<TextField
+				id="register-location-uuid"
+				name="location"
+				type="text"
+				label="Location code"
+				required
+				fullWidth
+				margin="normal"
+				value={match.params.loc_uuid}
+				className={classes.textField}
+				disabled
 			/>
 		</div>
 	);
