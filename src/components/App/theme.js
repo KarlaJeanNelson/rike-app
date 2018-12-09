@@ -19,16 +19,16 @@ const theme = createMuiTheme({
 	},
 	typography: {
 		h1: {
-			fontFamily: `'Raleway', 'Roboto', 'Arial', sans-serif`,
+			fontFamily: '\'Raleway\', \'Roboto\', \'Arial\', sans-serif',
 			textTransform: 'uppercase',
 			textAlign: 'center',
 		},
 		h4: {
-			fontFamily: `'Karla', 'Roboto', 'Arial', sans-serif`,
+			fontFamily: '\'Karla\', \'Roboto\', \'Arial\', sans-serif',
 			textTransform: 'uppercase',
 		},
 		h5: {
-			fontFamily: `'BioRhyme', 'Roboto', 'Arial', sans-serif`,
+			fontFamily: '\'BioRhyme\', \'Roboto\', \'Arial\', sans-serif',
 			textTransform: 'lowercase',
 		},
 		useNextVariants: true,

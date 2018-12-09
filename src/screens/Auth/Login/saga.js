@@ -3,66 +3,65 @@ import axios from 'axios';
 
 // worker Saga: will be fired on "LOGIN" actions
 function* loginUser(action) {
-  try {
-    // clear any existing error on the login page
-    yield put({ type: 'CLEAR_AUTH_ERRORS' });
+	try {
+		// clear any existing error on the login page
+		yield put({ type: 'CLEAR_AUTH_ERRORS' });
+		yield put({ type: 'SET_LIST_OR_NEW', payload: 'ItemList' });
+		const config = {
+			headers: { 'Content-Type': 'application/json' },
+			withCredentials: true,
+		};
 
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    };
-
-    // send the action.payload as the body
-    // the config includes credentials which
-    // allow the server session to recognize the user
-    yield axios.post('api/user/login', action.payload, config);
+		// send the action.payload as the body
+		// the config includes credentials which
+		// allow the server session to recognize the user
+		yield axios.post('api/user/login', action.payload, config);
     
-    // after the user has logged in
-    // get the user information from the server
-    yield put({type: 'FETCH_USER'});
-  } catch (error) {
-    console.log('Error with user login:', error.response);
-    if (error.response.status === 401) {
-      // The 401 is the error status sent from passport
-      // if user isn't in the database or
-      // if the username and password don't match in the database
-      yield put({ type: 'LOGIN_FAILED' });
+		// after the user has logged in
+		// get the user information from the server
+		yield put({type: 'FETCH_USER'});
+	} catch (error) {
+		console.log('Error with user login:', error.response);
+		if (error.response.status === 401) {
+			// The 401 is the error status sent from passport
+			// if user isn't in the database or
+			// if the username and password don't match in the database
+			yield put({ type: 'LOGIN_FAILED' });
 		} else {
-      // Got an error that wasn't a 401
-      // Could be anything, but most common cause is the server is not started
-      yield put({ type: 'AUTH_FAILED_NO_CODE' });
-    }
-  }
+			// Got an error that wasn't a 401
+			// Could be anything, but most common cause is the server is not started
+			yield put({ type: 'AUTH_FAILED_NO_CODE' });
+		}
+	}
 }
 
 // worker Saga: will be fired on "LOGOUT" actions
 function* logoutUser(action) {
-  try {
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
+	try {
+		const config = {
+			headers: { 'Content-Type': 'application/json' },
+			withCredentials: true,
 		};
-		yield put({ type: 'SET_LIST_OR_NEW', payload: 'ItemList' })
 
-    // the config includes credentials which
-    // allow the server session to recognize the user
-    // when the server recognizes the user session
-    // it will end the session
-    yield axios.post('api/user/logout', config);
+		// the config includes credentials which
+		// allow the server session to recognize the user
+		// when the server recognizes the user session
+		// it will end the session
+		yield axios.post('api/user/logout', config);
 
-    // now that the session has ended on the server
-    // remove the client-side user object to let
-    // the client-side code know the user is logged out
-    yield put({ type: 'UNSET_USER' });
+		// now that the session has ended on the server
+		// remove the client-side user object to let
+		// the client-side code know the user is logged out
+		yield put({ type: 'UNSET_USER' });
 
-  } catch (error) {
-    console.log('Error with user logout:', error);
-  }
+	} catch (error) {
+		console.log('Error with user logout:', error);
+	}
 }
 
 function* loginSaga() {
-  yield takeLatest('LOGIN', loginUser);
-  yield takeLatest('LOGOUT', logoutUser);
+	yield takeLatest('LOGIN', loginUser);
+	yield takeLatest('LOGOUT', logoutUser);
 }
 
 export default loginSaga;

@@ -38,46 +38,54 @@ const getTitle = mode => (mode === 'LOGIN' ? 'LOGIN ERROR' : 'REGISTRATION ERROR
 
 class AuthPage extends Component {
   state = {
-		username: '',
-		password: '',
-		password2: '',
-		uuid: this.props.match.params.loc_uuid,
+  	username: '',
+  	password: '',
+  	password2: '',
+  	loc_uuid: this.props.match.params.loc_uuid,
   };
 
   login = () => {
-		// event.preventDefault();
-		// console.log(`in login`, this.state);
-    if (this.state.username && this.state.password) {
-      this.props.dispatch({
-        type: 'LOGIN',
-        payload: {
-          username: this.state.username,
-          password: this.state.password,
-        },
-      });
-    } else {
-      this.props.dispatch({ type: 'AUTH_INPUT_ERROR' });
-    }
-	} // end login
+  	// event.preventDefault();
+  	// console.log(`in login`, this.state);
+  	if (this.state.username && this.state.password) {
+  		this.props.dispatch({
+  			type: 'LOGIN',
+  			payload: {
+  				username: this.state.username,
+  				password: this.state.password,
+  			},
+  		});
+  	} else {
+  		this.props.dispatch({ type: 'AUTH_INPUT_ERROR' });
+  	}
+  } // end login
 	
+	// TODO: move username and password errors to blur for fields.
 	registerUser = () => {
 		// event.preventDefault();
-		if (this.state.password.length < 8) {
+		if (this.state.username.match(/\W\s/)) {
+			// console.log(this.state.username);
+			this.props.dispatch({
+				type: 'INVALID_USERNAME'
+			});
+		} else if (this.state.password.length < 8) {
 			this.props.dispatch({
 				type: 'PASSWORD_TOO_SHORT'
-			})
+			});
 		} else if (this.state.password !== this.state.password2) {
 			this.props.dispatch({
 				type: 'PASSWORD_MISMATCH'
 			});
 		} else if (this.state.username && this.state.password) {
-      this.props.dispatch({
-        type: 'REGISTER',
-        payload: this.state,
-      });
-    } else {
-      this.props.dispatch({type: 'AUTH_INPUT_ERROR'});
-    }
+			this.props.dispatch({
+				type: 'REGISTER',
+				payload: this.state,
+			});
+		} else {
+			this.props.dispatch({
+				type: 'AUTH_INPUT_ERROR'
+			});
+		}
 	} // end registerUser
 	
 	handleClose = () => {
@@ -87,10 +95,10 @@ class AuthPage extends Component {
 	}
 
   handleChange = (propertyName) => (event) => {
-    this.setState({
-      [propertyName]: event.target.value,
-    });
-	}
+  	this.setState({
+  		[propertyName]: event.target.value,
+  	});
+  }
 
 	handleSubmit = (mode) => (event) => {
 		event.preventDefault();
@@ -115,22 +123,22 @@ class AuthPage extends Component {
 	}
 
 	componentDidMount() {
-		const {loc_uuid} = this.props.match.params
+		const {loc_uuid} = this.props.match.params;
 		console.log(loc_uuid, this.props.mode);
 		if (this.props.mode === 'LOGIN' && loc_uuid) {
 			this.props.dispatch({
 				type: 'TOGGLE_MODE',
-				payload: `SET_TO_REGISTER_MODE`
+				payload: 'SET_TO_REGISTER_MODE'
 			});	
 		}
 	}
 
-  render() {
+	render() {
 		const { classes, mode, message } = this.props;
 		// console.log('message:', message, !!message);
-    return (
+		return (
 			<div className={classes.root}>
-				{ !!message ? <AlertDialog title={getTitle(mode)} message={message} handleClose={this.handleClose} open={!!message} /> : null }
+				{ message ? <AlertDialog title={getTitle(mode)} message={message} handleClose={this.handleClose} open={!!message} /> : null }
 				<Grid container spacing={16} className={classes.grow}>
 					<Grid item sm={1} md={2} lg={3}></Grid>
 					<Grid item xs={12} sm={10} md={8} lg={6} className={classes.grow}>
@@ -159,13 +167,13 @@ class AuthPage extends Component {
 					<Grid item sm={1} md={2} lg={3}></Grid>
 				</Grid>
 			</div>
-    );
-  }
+		);
+	}
 }
 
 AuthPage.propTypes = {
 	classes: PropTypes.object.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
 	message: state.auth.errorMessage,

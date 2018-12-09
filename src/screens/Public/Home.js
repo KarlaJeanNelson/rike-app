@@ -12,32 +12,34 @@ const styles = theme => ({
 		height: '100vh',
 	},
 	hero: {
-		height: '100%',
+		height: '100vh',
 		background: theme.palette.grey[900],
-		margin: 0,
+		position: 'fixed',
+		top: theme.spacing.unit,
 	},
 	title: {
 		fontSize: theme.typography.fontSize * 10,
-	}
-})
+	},
+	toolbar: theme.mixins.toolbar,
+});
 
 const HomePage = props => {
 	const { classes } = props;
+	console.log(props)
 	return (
-  <div className={classes.root}>
-		<ToolbarSpacer />
-		<Grid container spacing={16} className={classes.hero} justify="center" alignItems="center">
-			<Grid item></Grid>
-			<Typography variant="h1" className={classes.title}>
+		<div className={classes.root}>
+			<div className={classes.toolbar} />
+			<Grid container spacing={16} className={classes.hero} justify="center" alignItems="center">
+				<Typography variant="h1" className={classes.title}>
 				Home
-			</Typography>
-		</Grid>
-  </div>
-	)
-}
+				</Typography>
+			</Grid>
+		</div>
+	);
+};
 
 HomePage.propTypes = {
 	classes: PropTypes.object.isRequired,
-}
+};
 
 export default withStyles(styles)(HomePage);

@@ -49,7 +49,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "^5.9.0",
     "nodemon": "^1.17.2"
   },
   "browserslist": [

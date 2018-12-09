@@ -25,14 +25,14 @@ const menuItems = {
 }
 
 const menuItemsOther = [
-	// menuItems.all,
+	menuItems.all,
 	menuItems.scheduled,
 	menuItems.available,
 	menuItems.closed,
 ]
 
 const menuItemsDonor = [
-	// menuItems.all,
+	menuItems.all,
 	menuItems.saved,
 	menuItems.scheduled,
 	menuItems.available,
@@ -40,7 +40,7 @@ const menuItemsDonor = [
 ]
 
 const menuItemsRescuer = [
-	// menuItems.all,
+	menuItems.all,
 	menuItems.scheduled,
 	menuItems.closed,
 ]
@@ -110,7 +110,7 @@ class UserMenu extends Component {
 
 	handleNew = event => {
 		this.setState({
-			selectedIndex: '',
+			selectedIndex: 0,
 		})
 		this.props.dispatch({
 			type: 'RENDER_USER_HOME',
@@ -186,7 +186,7 @@ class UserMenu extends Component {
 								key={index}
 								selected={this.state.selectedIndex === index}
 								onClick={event => this.handleOrgListItemClick(event, index, item)}
-								component={Link} to="/home"
+								component={Link} to="/user"
 							>
 								<ListItemIcon>
 									<FontAwesomeIcon icon={item.icon} fixedWidth size="lg" />
