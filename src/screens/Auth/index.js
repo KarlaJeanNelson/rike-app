@@ -127,7 +127,7 @@ class AuthPage extends Component {
 
 	componentDidMount() {
 		const {loc_uuid} = this.props.match.params;
-		console.log(loc_uuid, this.props.mode);
+		// console.log(loc_uuid, this.props.mode);
 		if (this.props.mode === 'LOGIN' && loc_uuid) {
 			this.props.dispatch({
 				type: 'TOGGLE_MODE',
