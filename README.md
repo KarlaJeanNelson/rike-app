@@ -16,4 +16,3 @@ To run the app locally, follow these steps:
 2. Navigate into the rike-app directory (cd rike-app).
 3. Install dependencies (npm install or yarn).
 
-
