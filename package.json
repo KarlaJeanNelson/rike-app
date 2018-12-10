@@ -1,7 +1,7 @@
 {
   "name": "prime-solo-project",
 	"version": "0.1.0",
-	"homepage": ,
+	"homepage": "https://nameless-plateau-11379.herokuapp.com/",
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
