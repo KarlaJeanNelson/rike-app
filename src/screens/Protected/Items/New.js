@@ -21,9 +21,9 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 const styles = theme => ({
-  root: {
+	root: {
 		display: 'flex',
-    flexGrow: 1,
+		flexGrow: 1,
 	},
 	grow: {
 		flexGrow: 1,
@@ -51,7 +51,7 @@ const styles = theme => ({
 		marginLeft: theme.spacing.unit * 2,	
 	},
 	leftIcon: {
-    marginRight: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
 	},
 	grey: {
 		color: theme.palette.grey[600],
@@ -64,33 +64,33 @@ const styles = theme => ({
 		border: 'solid lime 1px',
 		background: 'yellow',
 	},
-  toolbar: theme.mixins.toolbar,
+	toolbar: theme.mixins.toolbar,
 });
 
 const TextMaskCustom = props => {
-  const { inputRef, ...other } = props;
+	const { inputRef, ...other } = props;
 
-  return (
-    <MaskedInput
-      {...other}
-      ref={inputRef}
-      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      placeholderChar={'\u2000'}
-      showMask
+	return (
+		<MaskedInput
+			{...other}
+			ref={inputRef}
+			mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+			placeholderChar={'\u2000'}
+			showMask
 			keepCharPositions={true}
-    />
-  );
-}
+		/>
+	);
+};
 
 TextMaskCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
+	inputRef: PropTypes.func.isRequired,
 };
 
 const units = [
 	{ id: 10, abbr: 'Kg' },
 	{ id: 9, abbr: 'g' },
 	{ id: 3, abbr: 'lb' },
-]
+];
 
 const initialState = {
 	qtyUnit: 3,
@@ -109,7 +109,7 @@ const initialState = {
 	prepInstructions: '',
 	qty: '',
 	storageInstructions: ''
-}
+};
 
 class NewItem extends Component {
 	state = initialState;
@@ -129,7 +129,7 @@ class NewItem extends Component {
 			qty: '20',
 			qtyUnit: 10,
 			storageInstructions: 'Keep refrigerated or frozen until use.',
-		})
+		});
 		this.currentUser();
 	}
 
@@ -139,14 +139,14 @@ class NewItem extends Component {
 			contactName: user.full_name,
 			contactPhone: user.user_phone,
 			contactEmail: user.email,
-		})
+		});
 	}
 
   handleChange = propName => event => {
-    this.setState({
-      [propName]: event.target.value,
-		});
-	}
+  	this.setState({
+  		[propName]: event.target.value,
+  	});
+  }
 
 	setDate = propName => date => {
 		let setToDate = new Date(date);
@@ -158,14 +158,14 @@ class NewItem extends Component {
 
 		this.setState({
 			[propName]: setToDate
-		})
+		});
 	}
 
 	handleSubmit = status => event => {
 		event.preventDefault();
-		const { user } = this.props
+		const { user } = this.props;
 		if (!this.state.foodName) {
-			alert('Sorry, pal. Must give food a name before saving record.')
+			alert('Sorry, pal. Must give food a name before saving record.');
 		} else {
 			this.props.dispatch({
 				type: 'CREATE_ITEM',
@@ -174,7 +174,7 @@ class NewItem extends Component {
 					status: status,
 					itemData: this.state,
 				}
-			})
+			});
 		}
 	}
 
@@ -182,7 +182,7 @@ class NewItem extends Component {
 		this.props.dispatch({
 			type: 'SET_LIST_OR_NEW',
 			payload: 'ItemList',
-		})
+		});
 	}
 
 	componentDidMount() {
@@ -190,7 +190,7 @@ class NewItem extends Component {
 		this.setState({
 			createdById: user.id,
 			locId: user.loc_id,
-		})
+		});
 	}
 
 	// componentWillUnmount() {
@@ -361,6 +361,7 @@ class NewItem extends Component {
 									ampm
 									autoOk
 									disablePast
+									dateRangeIcon={<EventIcon />}
 									format="ddd MM/DD/YYYY h:mm A"
 									keyboard
 									keyboardIcon={<ScheduleIcon />}
@@ -527,7 +528,7 @@ class NewItem extends Component {
 
 NewItem.propTypes = {
 	classes: PropTypes.object.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
 	user: state.auth.user,

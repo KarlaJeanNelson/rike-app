@@ -26,29 +26,29 @@ const styles = theme => ({
 	textField: {
 
 	},
-})
+});
 
 const TextMaskCustom = props => {
-  const { inputRef, ...other } = props;
+	const { inputRef, ...other } = props;
 
-  return (
-    <MaskedInput
-      {...other}
-      ref={inputRef}
-      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      placeholderChar={'\u2000'}
-      showMask
+	return (
+		<MaskedInput
+			{...other}
+			ref={inputRef}
+			mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+			placeholderChar={'\u2000'}
+			showMask
 			keepCharPositions={true}
-    />
-  );
-}
+		/>
+	);
+};
 
 TextMaskCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
+	inputRef: PropTypes.func.isRequired,
 };
 
 const RegisterForm = props => {
-	const { classes, handleChange } = props;
+	const { classes, handleChange, match } = props;
 	return (
 		<div className={classes.root}>
 			<TextField
@@ -148,16 +148,28 @@ const RegisterForm = props => {
 				required
 				fullWidth
 				margin="normal"
-				value={props.location}
-				onChange={handleChange('location')}
+				value={props.loc_uuid}
+				onChange={handleChange('loc_uuid')}
 				className={classes.textField}
 			/>
+			{/* <TextField
+				id="register-location-uuid"
+				name="location"
+				type="text"
+				label="Location code"
+				required
+				fullWidth
+				margin="normal"
+				value={match.params.loc_uuid}
+				className={classes.textField}
+				
+			/> */}
 		</div>
 	);
-}
+};
 
 RegisterForm.propTypes = {
 	classes: PropTypes.object.isRequired,
-}
+};
 
 export default withStyles(styles)(RegisterForm);

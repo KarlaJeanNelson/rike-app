@@ -19,6 +19,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 		})
 })
 
+
+// TODO: convert to query using query route (add loc_id to query).
+// TODO: Use loc_uuid instead.
 router.get('/org/:id', rejectUnauthenticated, (req, res) => {
 	const { query, params } = req;
 	let qryString = `SELECT * FROM item_info WHERE (loc_id=$1 OR pickup_org_id=$1)`;

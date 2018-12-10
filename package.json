@@ -36,7 +36,9 @@
     "redux-saga": "^0.16.0",
     "typeface-biorhyme": "0.0.54",
     "typeface-karla": "0.0.54",
-    "typeface-roboto": "0.0.54"
+    "typeface-raleway": "0.0.54",
+    "typeface-roboto": "0.0.54",
+    "typeface-syncopate": "0.0.54"
   },
   "scripts": {
     "start": "node server/server.js",

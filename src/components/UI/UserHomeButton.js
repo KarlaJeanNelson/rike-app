@@ -8,7 +8,7 @@ const UserHomeButton = props => (
 	<IconButton
 		color="inherit"
 		component={Link}
-		to="/home"
+		to="/user"
 	>
 		<FontAwesomeIcon icon="home" size="xs" />
 	</IconButton>

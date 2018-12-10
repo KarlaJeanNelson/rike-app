@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
+import withWidth from '@material-ui/core/withWidth';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 // import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 
 import MenuButton from '../UI/MenuButton';
 import LogInButton from '../UI/LogInButton';
@@ -29,6 +31,9 @@ const styles = theme => ({
 	logo: {
 		fontFamily: `'BioRhyme', sans-serif`,
 		textDecoration: 'none',
+		[theme.breakpoints.down('sm')]: {
+			textAlign: 'center',
+		}
 	},
 })
 
@@ -47,10 +52,11 @@ const TopNav = props => {
 					>
 							rike
           </Typography>
-					<Button component={Link} to="/" color="inherit">Home</Button>
-					<Button component={Link} to="/about" color="inherit">About</Button>
-					<Button component={Link} to="/contact" color="inherit">Contact</Button>
-					
+					<Hidden smDown>
+						<Button component={Link} to="/" color="inherit">Home</Button>
+						<Button component={Link} to="/about" color="inherit">About</Button>
+						<Button component={Link} to="/contact" color="inherit">Contact</Button>
+					</Hidden>
 					{user.id ? <UserNavButtons /> : <LogInButton />}
         </Toolbar>
       </AppBar>
@@ -68,5 +74,6 @@ const mapStateToProps = state => ({
 
 export default compose(
 	connect(mapStateToProps),
-	withStyles(styles)
+	withStyles(styles),
+	withWidth(),
 )(TopNav);

@@ -57,32 +57,36 @@ class ItemList extends Component {
 		event.preventDefault();
 		const { user } = this.props;
 		// console.log(item);
-		this.props.dispatch({
-			type: 'UPDATE_ITEM',
-			next_screen: 'available',
-			item_id: item.item_id,
-			payload: {
-				pickup_org_id: user.loc_id,
-				status: 'scheduled',
-				pickup_status: 'scheduled',
-				pickup_created_by: user.id,
-				// pickup_created_at: Date.now(),
-			}
-		})
+		if (item.status === 'available') {
+			this.props.dispatch({
+				type: 'UPDATE_ITEM',
+				next_screen: 'available',
+				item_id: item.item_id,
+				payload: {
+					pickup_org_id: user.loc_id,
+					status: 'scheduled',
+					pickup_status: 'scheduled',
+					pickup_created_by: user.id,
+					// pickup_created_at: Date.now(),
+				}
+			})
+		}
 	}
 
 	closeItem = (event, item) => {
 		event.preventDefault();
 		const { user } = this.props;
-		this.props.dispatch({
-			type: 'UPDATE_ITEM',
-			next_screen: 'scheduled',
-			item_id: item.item_id,
-			payload: {
-				status: 'closed',
-				pickup_closed_by: user.id,
-			}
-		})
+		if (item.status === 'scheduled') {
+			this.props.dispatch({
+				type: 'UPDATE_ITEM',
+				next_screen: 'scheduled',
+				item_id: item.item_id,
+				payload: {
+					status: 'closed',
+					pickup_closed_by: user.id,
+				}
+			})
+		}		
 	}
 
 	DonorCardActions = (props) => {
@@ -92,7 +96,7 @@ class ItemList extends Component {
 				<Button className={classes.button} size="small">Edit</Button>
 				<Button className={classes.button} size="small">Cancel</Button>
 				<div className={classes.grow} />
-				<Button className={classes.button} size="small">Complete</Button>
+				<Button className={classes.button} size="small" onClick={(event) => this.closeItem(event, props.item)}>Complete</Button>
 			</CardActions>
 		)
 	}
