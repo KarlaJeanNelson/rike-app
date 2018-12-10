@@ -30,17 +30,17 @@ if (process.env.DATABASE_URL) {
   config = {
     host: 'localhost', // Server hosting the postgres database
     port: 5432, // env var: PGPORT
-    database: 'prime_app', // CHANGE THIS LINE! env var: PGDATABASE, this is likely the one thing you need to change to get up and running
+    database: 'rike', // db name
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
   };
 }
 
-// this creates the pool that will be shared by all other modules
+// creates the pool that will be shared by all other modules
 const pool = new pg.Pool(config);
 
-// the pool with emit an error on behalf of any idle clients
-// it contains if a backend error or network partition happens
+// the pool will emit an error on behalf of any idle clients
+// if a backend error or network partition happens
 pool.on('error', (err) => {
   console.log('Unexpected error on idle client', err);
   process.exit(-1);

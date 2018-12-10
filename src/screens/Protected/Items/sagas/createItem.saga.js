@@ -13,7 +13,7 @@ function* createItem(action) {
 		yield put({ type: 'ACTION_COMPLETED' });
   } catch (error) {
 		console.log('Error creating item:', error.response);
-		yield put({ type: 'CREATE_ITEM_ERROR', payload: error.respose.data });
+		yield put({ type: 'CREATE_ITEM_ERROR', payload: error.response.data });
 		yield put({ type: 'ACTION_COMPLETED' });
   }
 }

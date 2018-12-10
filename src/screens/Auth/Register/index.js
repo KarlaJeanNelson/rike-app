@@ -152,18 +152,18 @@ const RegisterForm = props => {
 				onChange={handleChange('loc_uuid')}
 				className={classes.textField}
 			/>
-			{/* <TextField
-				id="register-location-uuid"
-				name="location"
+			<TextField
+				id="register-contact-notes"
+				name="contact-notes"
 				type="text"
-				label="Location code"
-				required
+				label="Contact notes"
 				fullWidth
 				margin="normal"
-				value={match.params.loc_uuid}
+				placeholder="E.g., prefers contact via text or e-mail."
+				value={props.contact_notes}
+				onChange={handleChange('contact_notes')}
 				className={classes.textField}
-				
-			/> */}
+			/>
 		</div>
 	);
 };

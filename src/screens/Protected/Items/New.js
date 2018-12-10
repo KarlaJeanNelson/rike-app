@@ -139,6 +139,7 @@ class NewItem extends Component {
 			contactName: user.full_name,
 			contactPhone: user.user_phone,
 			contactEmail: user.email,
+			contactNotes: user.contact_notes,
 		});
 	}
 
