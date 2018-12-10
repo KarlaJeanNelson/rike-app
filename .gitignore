@@ -61,5 +61,9 @@ typings/
 # dotenv environment variables file
 .env
 
-# ignore package-lock as it complicates merging
+# ignore lock files as they complicate merging
 package-lock.json
+yarn.lock
+
+#ignore vscode files
+.vs_code/

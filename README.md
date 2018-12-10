@@ -34,10 +34,10 @@ To run the app locally, follow these steps:
 1. Follow the steps above, but use `Location code` **b11d693f-9d86-4552-8f05-2dc82ce3e4e2**.
 2. Upon registration, you should be taken to a user homepage with options to view your org's rescues or browse available donations.
 
-### Features
+## Features
 Like all apps, this one is a work in progress. Feel free to create issues or pull requests. (No promises on turnaround, though ... sorry!)
 
-## Future Features
+### Future Features
 In no particular order, features I would like to add include:
 - [ ] Allow donors to see information about the rescuer (org and contact person) of a donation.
 - [ ] Allow donors to edit donations.
