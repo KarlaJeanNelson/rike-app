@@ -1,6 +1,6 @@
 import React from 'react';
-import {Route} from 'react-router-dom'
-import {connect} from 'react-redux';
+import { Route } from 'react-router-dom'
+import { connect } from 'react-redux';
 import AuthPage from '../../screens/Auth/index';
 
 // A Custom Wrapper Component -- This will keep our code DRY.

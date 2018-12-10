@@ -21,7 +21,7 @@ import { faClock as farClock, faSave as farSave } from '@fortawesome/free-regula
 
 import TopNav from '../TopNav/TopNav';
 import ToolbarSpacer from '../UI/ToolbarSpacer';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from './ProtectedRoute';
 import Home from '../../screens/Public/Home';
 import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
