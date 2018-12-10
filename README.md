@@ -38,7 +38,7 @@ To run the app locally, follow these steps:
 Like all apps, this one is a work in progress. Feel free to create issues or pull requests. (No promises on turnaround, though ... sorry!)
 
 ### Future Features
-In no particular order, features I would like to add include:
+In no particular order, features I would like to include:
 - [ ] Allow donors to see information about the rescuer (org and contact person) of a donation.
 - [ ] Allow donors to edit donations.
 - [ ] Allow rescuers to add notes to their pickup information.
