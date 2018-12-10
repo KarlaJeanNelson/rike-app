@@ -51,7 +51,7 @@ class App extends Component {
 						Visiting localhost:3000/user will show the UserHome if the user is logged in.
 						If the user is not logged in, the ProtectedRoute will show the login screen.
 						Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-						<ProtectedRoute exact path="/user" component={UserHome} />
+						<ProtectedRoute path="/user" component={UserHome} />
 						{/* <ProtectedRoute path="/user/:loc_uuid" component={UserHome} /> */}
 						{/* If none of the other routes match, we will be redirect to the splash page. */}
 						<Route render={() => <Redirect to="/" />} />

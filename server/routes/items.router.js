@@ -40,7 +40,7 @@ router.get('/org/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res) => {
 	const item = req.body.itemData
 	// console.log(req.body);
-	let sqlText = 'INSERT INTO items (loc_id, status, food_name, exp_date, qty, qty_unit, number_pkgs, pkg_desc, storage_instructions, prep_instructions, notes, contact_name, contact_phone, contact_email, contact_notes, pickup_start, pickup_end, pickup_notes, created_by)'
+	let sqlText = 'INSERT INTO items (loc_id, status, food_name, exp_date, qty, uom_id, number_pkgs, pkg_desc, storage_instructions, prep_instructions, notes, contact_name, contact_phone, contact_email, contact_notes, pickup_start, pickup_end, pickup_notes, created_by)'
 	sqlText = sqlText + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING item_id'
 	// console.log(sqlText);
 	pool.query(sqlText, [item.locId, req.body.status, item.foodName, item.expDate, item.qty, item.qtyUnit, item.numberPkgs, item.pkgDesc, item.storageInstructions, item.prepInstructions, item.notes, item.contactName, item.contactPhone, item.contactEmail, item.contactNotes, item.pickupStart, item.pickupEnd, item.pickupNotes, item.createdById])

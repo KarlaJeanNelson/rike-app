@@ -9,6 +9,7 @@ const router = express.Router();
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
 	// Send back user object from the session (previously queried from the database)
+	console.log(`in user router get; req.user:`, req.user);
 	res.send(req.user);
 });
 
@@ -16,16 +17,16 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {  
-	console.log(req.body);
+	// console.log(req.body);
 	const user = req.body;
 	const password = encryptLib.encryptPassword(req.body.password);
 
-	const queryText = 'INSERT INTO users (username, password, first_name, last_name, email, user_phone, loc_uuid) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
-	console.log('qryText:', queryText);
-	pool.query(queryText, [user.username, password, user.firstname, user.lastname, user.email, user.phone, user.loc_uuid])
+	const queryText = 'INSERT INTO users (username, password, first_name, last_name, email, user_phone, loc_id, contact_notes) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id';
+	// console.log('qryText:', queryText);
+	pool.query(queryText, [user.username, password, user.firstname, user.lastname, user.email, user.phone, user.loc_uuid, user.contact_notes])
 		.then(() => { res.sendStatus(201); })
 		.catch((err) => { 
-			console.error(err);
+			// console.error(err);
 			res.status(418).send(err);
 			next(err); 
 		});

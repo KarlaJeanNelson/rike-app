@@ -75,6 +75,7 @@ class ItemList extends Component {
 
 	closeItem = (event, item) => {
 		event.preventDefault();
+		// console.log(`in closeItem; item:`, item)
 		const { user } = this.props;
 		if (item.status === 'scheduled') {
 			this.props.dispatch({

@@ -41,7 +41,9 @@ class AuthPage extends Component {
   	username: '',
   	password: '',
   	password2: '',
-  	loc_uuid: this.props.match.params.loc_uuid,
+		// loc_id: this.props.match.params.loc_id,
+		loc_id: '',
+		contact_notes: '',
   };
 
   login = () => {
@@ -63,7 +65,8 @@ class AuthPage extends Component {
 	// TODO: move username and password errors to blur for fields.
 	registerUser = () => {
 		// event.preventDefault();
-		if (this.state.username.match(/\W\s/)) {
+		// Test username for special characters.
+		if (/[^0-9A-Za-z]/.test(this.state.username)) {
 			// console.log(this.state.username);
 			this.props.dispatch({
 				type: 'INVALID_USERNAME'

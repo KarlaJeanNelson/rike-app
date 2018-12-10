@@ -58,11 +58,12 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 2,
-  },
+		padding: theme.spacing.unit * 2,
+	},
   toolbar: theme.mixins.toolbar,
 });
 
+// TODO: refactor to reuse code for menu items (org vs all).
 class UserMenu extends Component {
 	state = {
 		selectedIndex: 0,
@@ -98,7 +99,7 @@ class UserMenu extends Component {
 	getAvailable = event => {
 		event.preventDefault();
 		this.setState({
-			selectedIndex: '',
+			selectedIndex: 0,
 		})
 		this.props.dispatch({
 			type: 'FETCH_ITEMS',
@@ -131,7 +132,6 @@ class UserMenu extends Component {
 						Create New
 					</Button>
 				</Typography>
-				<Divider />
 			</div>			
 		)
 	};
@@ -140,7 +140,7 @@ class UserMenu extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Typography align='center' className={classes.content}>
+				<Typography align='center' className={classes.content} >
 					<Button 
 						variant="contained"
 						color="secondary"
@@ -149,7 +149,6 @@ class UserMenu extends Component {
 						Browse Available
 					</Button>
 				</Typography>
-				<Divider />
 			</div>			
 		)
 	};
@@ -175,7 +174,9 @@ class UserMenu extends Component {
 					}}
 				>
 					<div className={classes.toolbar} />
-					{user.loc_type === 'donor' ? <this.NewButton /> : <this.BrowseButton />}
+					{user.loc_type === 'donor' ? <this.NewButton />
+					: <this.BrowseButton />}
+					<Divider />
 					<List>
 						<ListItem button>
 							<ListItemText primary={`My Org's Items`} />
