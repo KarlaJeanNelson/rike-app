@@ -160,7 +160,7 @@ VALUES
 (1,'donor'),
 (2,'rescuer');
 
-INSERT INTO "public"."uom"("uom_id","abbr","unit_name","plural","modifier","unit_type","unit_system","conversion_factor","common")
+INSERT INTO "uom"("uom_id","abbr","unit_name","plural","modifier","unit_type","unit_system","conversion_factor","common")
 VALUES
 (2,E'oz',E'ounce',E'ounces',NULL,E'mass (weight)',E'US',0.0283495,FALSE),
 (3,E'lb',E'pound',E'pounds',NULL,E'mass (weight)',E'US',0.453592,TRUE),
@@ -174,10 +174,7 @@ VALUES
 (11,E'mL',E'milliliter',E'milliliters',NULL,E'volume',E'metric',0.001,FALSE),
 (12,E'L',E'liter',E'liters',NULL,E'volume',E'metric',1,FALSE);
 
-INSERT INTO "locations"("loc_name","address1","address2","city","state","zip","website","loc_phone","map_id","lat","long","loc_type_id")
+INSERT INTO "locations"("loc_id","loc_name","address1","address2","city","state","zip","website","loc_phone","map_id","lat","long","loc_type_id")
 VALUES
-(E'fig + farro',E'3001 Hennepin Ave S',NULL,E'Minneapolis',E'MN',E'55408',E'www.figandfarro.com',E'(612) 208-0609',NULL,44.948168,-93.297981,1),
-(E'Open Arms of Minnesota',E'2500 Bloomington Ave',NULL,E'Minneapolis',E'MN',E'55404',E'www.openarmsmn.org',E'(612) 872-1152',NULL,44.9346481,93.3085437,2),
-(E'Gandhi Mahal',E'3009 27th Ave S',NULL,E'Minneapolis',E'MN',E'55406',E'www.gandhimahal.com',E'(612) 729-5222',NULL,44.9479224,-93.2329495,1),
-(E'Tiny Diner',E'1024 E 38th St',NULL,E'Minneapolis',E'MN',E'55407',E'www.tinydiner.com',E' (612) 767-3322',NULL,44.9344457,-93.2590032,1),
-(E'Simpson Housing Services',E'2740 1st Ave S',NULL,E'Minneapolis',E'MN',E'55408',E'www.simpsonhousing.org',E'(612) 874-0306',NULL,44.9570056,-93.2836962,2);
+(E'bbc27b5a-50f4-4f2d-91e1-7475a99f3b4a',E'Test Restaurant 1',E'3009 27th Ave S',NULL,E'Minneapolis',E'MN',E'55406',E'www.testrestaurant1.com',E'(612) 123-4567',NULL,44.9479224,-93.2329495,1),
+(E'b11d693f-9d86-4552-8f05-2dc82ce3e4e2',E'Test Rescuer 1',E'2500 Bloomington Ave',NULL,E'Minneapolis',E'MN',E'55404',E'www.testrescuer1.org',E'(612) 987-6543',NULL,44.9346481,93.3085437,2);
