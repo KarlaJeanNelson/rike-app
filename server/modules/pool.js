@@ -1,5 +1,6 @@
 const pg = require('pg');
 const url = require('url');
+const { Client } = require('pg');
 
 let config = {};
 
@@ -18,7 +19,21 @@ if (process.env.DATABASE_URL) {
     ssl: true, // heroku requires ssl to be true
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-  };
+	};
+	const client = new Client({
+		connectionString: process.env.DATABASE_URL,
+		ssl: true,
+	});
+	
+	client.connect();
+	
+	client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+		if (err) throw err;
+		for (let row of res.rows) {
+			console.log(JSON.stringify(row));
+		}
+		client.end();
+	});
 } else {
   config = {
     host: 'localhost', // Server hosting the postgres database
