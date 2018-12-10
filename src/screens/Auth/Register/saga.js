@@ -19,10 +19,10 @@ function* registerUser(action) {
 		yield put({type: 'SET_TO_LOGIN_MODE'});
 	} catch (error) {
 		console.log('Error with user registration:', error.response);
-		if (error.response.data.code == 23505) {
+		if (error.response.data.code === 23505) {
 			// PostgreSQL will throw a 23505 error if username is already taken.
 			yield put({ type: 'USERNAME_TAKEN' });
-		} else if (error.response.data.code == 23503) {
+		} else if (error.response.data.code === 23503) {
 			// PostgreSQL will throw a 23503 error if location id does not exist in locations table.
 			yield put({ type: 'INCORRECT_LOCATION'});
 		} else {

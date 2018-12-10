@@ -39,8 +39,7 @@
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
-		"nodemon": "^1.17.2",
-		"eslint": "^5.10.0"
+		"nodemon": "^1.17.2"
   },
   "scripts": {
     "start": "node server/server.js",

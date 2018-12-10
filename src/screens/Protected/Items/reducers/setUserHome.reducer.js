@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const setUserHome = (state = {view: 'ItemList', status: ''} , action) => {
 	switch(action.type) {
 		case 'SET_LIST_OR_NEW':

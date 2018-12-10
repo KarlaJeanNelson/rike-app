@@ -48,7 +48,7 @@ TextMaskCustom.propTypes = {
 };
 
 const RegisterForm = props => {
-	const { classes, handleChange, match } = props;
+	const { classes, handleChange } = props;
 	return (
 		<div className={classes.root}>
 			<TextField
