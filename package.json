@@ -17,6 +17,7 @@
     "classnames": "^2.2.6",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^4.0.0",
+    "eslint": "^5.10.0",
     "express": "^4.16.4",
     "material-ui-pickers": "^2.0.4",
     "moment": "^2.22.2",
@@ -36,8 +37,7 @@
     "typeface-biorhyme": "0.0.54",
     "typeface-karla": "0.0.54",
     "typeface-raleway": "0.0.54",
-    "typeface-roboto": "0.0.54",
-    "typeface-syncopate": "0.0.54"
+    "typeface-roboto": "0.0.54"
   },
   "scripts": {
     "start": "node server/server.js",
