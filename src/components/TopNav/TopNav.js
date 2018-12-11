@@ -31,8 +31,11 @@ const styles = theme => ({
 	logo: {
 		fontFamily: `'BioRhyme', sans-serif`,
 		textDecoration: 'none',
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.only('sm')]: {
 			textAlign: 'center',
+		},
+		[theme.breakpoints.only('xs')]: {
+			fontSize: '1.5rem',
 		}
 	},
 })

@@ -14,36 +14,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
+import { menuItemsOther, menuItemsDonor, menuItemsRescuer } from './MenuItems';
+
 const drawerWidth = 256;
-const menuItems = {
-	new: 	{text: 'Create New', icon: 'plus'},
-	all: 	{text: 'All', icon: 'cloud-meatball', queryField: '', queryText: ''},
-	saved: {text: 'Saved', icon: 'save', queryField: 'status', queryText: 'saved'},
-	scheduled: {text: 'Scheduled', icon: ['far', 'clock'], queryField: 'status', queryText: 'scheduled'},
-	available: {text: 'Available', icon: 'share', queryField: 'status', queryText: 'available'},
-	closed: {text: 'Closed', icon: 'archive', queryField: 'status', queryText: 'closed'},
-}
-
-const menuItemsOther = [
-	menuItems.all,
-	menuItems.scheduled,
-	menuItems.available,
-	menuItems.closed,
-]
-
-const menuItemsDonor = [
-	menuItems.all,
-	menuItems.saved,
-	menuItems.scheduled,
-	menuItems.available,
-	menuItems.closed,
-]
-
-const menuItemsRescuer = [
-	menuItems.all,
-	menuItems.scheduled,
-	menuItems.closed,
-]
 
 const styles = theme => ({
   root: {
@@ -227,5 +200,5 @@ const mapStateToProps = state => ({
 
 export default compose(
 	connect(mapStateToProps),
-	withStyles(styles)
+	withStyles(styles),
 )(UserMenu);

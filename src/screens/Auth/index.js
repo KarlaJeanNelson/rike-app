@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
@@ -27,6 +28,14 @@ const styles = theme => ({
 		margin: 0,
 		padding: 0,
 	},
+	responsiveButtons: {
+		[theme.breakpoints.up('sm')]: {
+			textAlign: 'right',
+		},
+		[theme.breakpoints.only('xs')]: {
+			textAlign: 'center',
+		}
+	},
 	button: {
 		marginLeft: 8,
 		minWidth: 100,		
@@ -42,7 +51,7 @@ class AuthPage extends Component {
   	password: '',
   	password2: '',
 		// loc_id: this.props.match.params.loc_id,
-		loc_id: '',
+		loc_uuid: '',
 		contact_notes: '',
   };
 
@@ -99,9 +108,15 @@ class AuthPage extends Component {
 
   handleChange = (propertyName) => (event) => {
   	this.setState({
-  		[propertyName]: event.target.value,
-  	});
-  }
+  		[propertyName]: event.target.value
+		});
+	}
+
+	handleOrgInput = event => {
+		this.setState({
+			orgInput: event.target.value
+		})
+	}
 
 	handleSubmit = (mode) => (event) => {
 		event.preventDefault();
@@ -115,6 +130,7 @@ class AuthPage extends Component {
 			password: '',
 			password2: '',
 			loc_uuid: '',
+			contact_notes: '',
 		});
 	}
 
@@ -123,17 +139,6 @@ class AuthPage extends Component {
 			type: 'TOGGLE_MODE',
 			payload: `SET_TO_${otherMode(mode)}_MODE`
 		});
-	}
-
-	componentDidMount() {
-		const {loc_uuid} = this.props.match.params;
-		// console.log(loc_uuid, this.props.mode);
-		if (this.props.mode === 'LOGIN' && loc_uuid) {
-			this.props.dispatch({
-				type: 'TOGGLE_MODE',
-				payload: 'SET_TO_REGISTER_MODE'
-			});	
-		}
 	}
 
 	render() {
@@ -148,8 +153,9 @@ class AuthPage extends Component {
 						<Paper className={classes.paper}>
 							<form onSubmit={this.handleSubmit(mode)}>
 								<Typography variant="h4" className={classes.spacing}>{mode}</Typography>
-								{ mode === 'LOGIN' ? <Login handleChange={this.handleChange}/> : <Register handleChange={this.handleChange} {...this.props} /> }
-								<Typography align="right" className={classes.spacing}>
+								{ mode === 'LOGIN' ? <Login handleChange={this.handleChange}/>
+								: <Register handleChange={this.handleChange} loc_uuid={this.state.loc_uuid} />}
+								<Typography className={classNames(classes.spacing, classes.responsiveButtons)}>
 									<Button
 										type="submit"
 										variant="contained"

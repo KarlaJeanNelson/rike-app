@@ -16,7 +16,7 @@ import 'typeface-raleway';
 import theme from './theme';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faCloudMeatball, faShare, faArchive, faCalendar, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils, faPaperPlane, faSave, faUserCircle, faBlenderPhone, faAt, faStickyNote, faGhost } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faCloudMeatball, faShare, faArchive, faCalendar, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils, faPaperPlane, faSave, faUserCircle, faBlenderPhone, faAt, faStickyNote, faGhost, faBinoculars } from '@fortawesome/free-solid-svg-icons';
 import { faClock as farClock, faSave as farSave } from '@fortawesome/free-regular-svg-icons';
 
 import TopNav from '../TopNav/TopNav';
@@ -27,7 +27,7 @@ import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
 import UserHome from '../../screens/Protected/User/index';
 
-library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote, faCalendar, faCloudMeatball, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils, faGhost);
+library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote, faCalendar, faCloudMeatball, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils, faGhost, faBinoculars);
 
 class App extends Component {
 	componentDidMount () {
