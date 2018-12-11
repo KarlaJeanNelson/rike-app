@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MaskedInput from 'react-text-mask';
 import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
@@ -140,18 +141,33 @@ const RegisterForm = props => {
 					inputComponent: TextMaskCustom,
 				}}
 			/>
-			<TextField
+			{/* <TextField
 				id="register-location"
 				name="location"
 				type="text"
 				label="Location code"
-				required
 				fullWidth
+				required
 				margin="normal"
 				value={props.loc_uuid}
 				onChange={handleChange('loc_uuid')}
 				className={classes.textField}
-			/>
+			/> */}
+			<TextField
+				id="register-org-type"
+				name="location"
+				label="Organization code"
+				fullWidth
+				required
+				select
+				margin="normal"
+				value={props.loc_uuid}
+				onChange={handleChange('loc_uuid')}
+				className={classes.textField}
+			>
+				<MenuItem value="bbc27b5a-50f4-4f2d-91e1-7475a99f3b4a">Register as Demo Donor</MenuItem>
+				<MenuItem value="b11d693f-9d86-4552-8f05-2dc82ce3e4e2">Register as Demo Rescuer</MenuItem>
+			</TextField>
 			<TextField
 				id="register-contact-notes"
 				name="contact-notes"

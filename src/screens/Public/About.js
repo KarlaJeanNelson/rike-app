@@ -23,7 +23,7 @@ const styles = theme => ({
 
 const AboutPage = props => {
 	const { classes } = props;
-	console.log(props)
+	// console.log(props)
 	return (
 		<div className={classes.root}>
 			<div className={classes.toolbar} />
