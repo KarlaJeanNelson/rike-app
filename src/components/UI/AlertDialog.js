@@ -18,7 +18,7 @@ class AlertDialog extends Component {
 
   render() {
 		const { title, message } = this.props;
-		console.log(this.state.open);
+		// console.log(this.state.open);
     return (
       <div>
         <Dialog

@@ -7,9 +7,9 @@ import { withWidth, Hidden } from '@material-ui/core/';
 
 import UserMenu from './Menu';
 import MobileMenu from './MobileMenu';
-import ItemList from '../Items/List';
-import NewItem from '../Items/New';
-import MobileListHeader from '../Items/MobileListHeader'
+import ItemList from './List';
+import NewItem from './NewItem';
+import MobileListHeader from './MobileListHeader'
 
 const styles = theme => ({
   root: {

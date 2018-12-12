@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
-		height: '100vh',
+		minHeight: '100vh',
 	},
 	hero: {
 		height: '100vh',
@@ -16,7 +16,9 @@ const styles = theme => ({
 		top: theme.spacing.unit,
 	},
 	title: {
-		fontSize: theme.typography.fontSize * 10,
+		[theme.breakpoints.up('md')]: {
+      fontSize: theme.typography.fontSize * 10,
+    },
 	},
 	toolbar: theme.mixins.toolbar,
 });

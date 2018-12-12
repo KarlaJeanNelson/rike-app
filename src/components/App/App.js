@@ -25,7 +25,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Home from '../../screens/Public/Home';
 import About from '../../screens/Public/About';
 import Contact from '../../screens/Public/Contact';
-import UserHome from '../../screens/Protected/User/index';
+import UserHome from '../../screens/Protected/UserHome/index';
 
 library.add(faBars, faUser, faUserSlash, faHome, faBuilding, faCity, faPlus, faShare, faArchive, farClock, farSave, faSave, faPaperPlane, faUserCircle, faBlenderPhone, faAt, faStickyNote, faCalendar, faCloudMeatball, faShareSquare, faPen, faTrash, faMapMarkerAlt, faAddressCard, faInfoCircle, faClock, faQuestionCircle, faCompass, faMap, faInfo, faQuestion, faUtensils, faGhost, faBinoculars);
 

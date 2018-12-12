@@ -151,7 +151,7 @@ class NewItem extends Component {
 
 	setDate = propName => date => {
 		let setToDate = new Date(date);
-		console.log(setToDate);
+		// console.log(setToDate);
 		// For expiration date, set to end of day
 		if (propName === 'expDate') {
 			setToDate = moment(setToDate).endOf('d');
@@ -203,7 +203,7 @@ class NewItem extends Component {
 
 	render() {
 		const { classes } = this.props;
-		console.log(this.props);
+		// console.log(this.props);
 		return (
 			<div className={classes.root}>
 				<Paper className={classes.paper}>
