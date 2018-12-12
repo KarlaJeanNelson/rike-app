@@ -16,7 +16,9 @@ const styles = theme => ({
 		top: theme.spacing.unit,
 	},
 	title: {
-		fontSize: theme.typography.fontSize * 10,
+		[theme.breakpoints.up('md')]: {
+      fontSize: theme.typography.fontSize * 10,
+    },
 	},
 	toolbar: theme.mixins.toolbar,
 });

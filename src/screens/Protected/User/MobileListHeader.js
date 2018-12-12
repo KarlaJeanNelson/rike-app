@@ -13,7 +13,7 @@ const styles = theme => ({
 	fab: {
 		position: 'fixed',
 		margin: theme.spacing.unit,
-		zIndex: 100,
+		zIndex: theme.zIndex.appBar - 1,
 	},
   toolbar: theme.mixins.toolbar,
 });

@@ -16,6 +16,8 @@ import Register from './Register';
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
+		minHeight: '100vh',
+		background: '#b0e0e6'
 	},
 	grow: {
 		flexGrow: 1

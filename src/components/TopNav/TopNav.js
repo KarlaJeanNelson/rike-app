@@ -42,6 +42,7 @@ const styles = theme => ({
 
 const TopNav = props => {
 	const { classes, user } = props;
+	// console.log(props)
 	return (
     <header className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
